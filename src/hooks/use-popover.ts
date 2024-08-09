@@ -1,3 +1,11 @@
+/**
+ * 这个文件包含了一个自定义的 React Hook，用于处理弹出框（Popover）的逻辑。
+ * 
+ * @template T - 弹出框锚点元素的类型，默认为 HTMLElement。
+ * 
+ * @returns {PopoverController<T>} - 弹出框控制器对象，包含了锚点元素的引用、打开、关闭和切换状态的方法，以及当前弹出框的状态。
+ */
+
 import * as React from 'react';
 
 interface PopoverController<T> {

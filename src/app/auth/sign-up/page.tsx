@@ -1,3 +1,12 @@
+/**
+ * 这个文件是用于注册页面的组件。
+ * 
+ * @remarks
+ * 这个组件导出了一个默认的函数组件 `Page`，用于渲染注册页面。
+ * 
+ * @public
+ */
+
 import * as React from 'react';
 import type { Metadata } from 'next';
 

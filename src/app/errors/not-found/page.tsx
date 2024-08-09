@@ -1,3 +1,10 @@
+/**
+ * 这个文件是一个React组件，用于显示“页面未找到”错误页面。
+ * 当用户访问不存在的页面时，将显示此组件。
+ * 
+ * @returns 返回一个React元素，用于渲染“页面未找到”错误页面。
+ */
+
 import * as React from 'react';
 import type { Metadata } from 'next';
 import RouterLink from 'next/link';
@@ -6,7 +13,6 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { ArrowLeft as ArrowLeftIcon } from '@phosphor-icons/react/dist/ssr/ArrowLeft';
-
 import { config } from '@/config';
 import { paths } from '@/paths';
 

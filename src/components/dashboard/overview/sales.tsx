@@ -1,3 +1,16 @@
+/**
+ * 这个文件包含了一个名为Sales的React组件，用于展示销售数据。
+ * 
+ * @remarks
+ * Sales组件接受以下属性：
+ * - `chartSeries`：一个包含销售数据的数组，每个数据包含一个名称和一个数据数组。
+ * - `sx`：一个可选的样式属性，用于自定义组件的外观。
+ * 
+ * @param chartSeries - 销售数据数组
+ * @param sx - 可选的样式属性
+ * @returns Sales组件的JSX元素
+ */
+
 'use client';
 
 import * as React from 'react';

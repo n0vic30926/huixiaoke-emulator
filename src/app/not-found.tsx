@@ -1,3 +1,13 @@
+
+
+/**
+ * 这个文件是一个React组件，用于显示404页面。
+ * 当用户访问不存在的页面时，将会显示该组件。
+ * 该组件包含一个错误提示图片、错误信息和返回首页按钮。
+ * 
+ * @returns 返回一个React元素，用于渲染404页面。
+ */
+
 import * as React from 'react';
 import type { Metadata } from 'next';
 import RouterLink from 'next/link';

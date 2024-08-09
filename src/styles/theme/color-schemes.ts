@@ -1,5 +1,11 @@
-import type { ColorSystemOptions } from '@mui/material/styles';
+/**
+ * 这个文件定义了颜色方案的常量对象。
+ * 包含了暗色和亮色两种颜色方案。
+ * 每个颜色方案包含了不同的调色板和颜色变量。
+ * 该文件导出了一个 `colorSchemes` 对象，该对象满足 `Partial<Record<ColorScheme, ColorSystemOptions>>` 类型。
+ */
 
+import type { ColorSystemOptions } from '@mui/material/styles';
 import { california, kepple, neonBlue, nevada, redOrange, shakespeare, stormGrey } from './colors';
 import type { ColorScheme } from './types';
 

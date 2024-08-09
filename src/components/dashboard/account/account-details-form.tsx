@@ -1,3 +1,10 @@
+/**
+ * 这个文件包含了一个名为AccountDetailsForm的React函数组件。
+ * AccountDetailsForm组件用于渲染一个用户账户详情表单。
+ * 表单包含了用户的个人信息，如姓名、邮箱、电话号码等。
+ * 用户可以编辑表单中的信息，并保存修改后的详情。
+ */
+
 'use client';
 
 import * as React from 'react';

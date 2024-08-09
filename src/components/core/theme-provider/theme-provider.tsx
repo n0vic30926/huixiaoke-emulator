@@ -1,3 +1,12 @@
+/**
+ * 这个文件是一个主题提供者组件，用于提供应用程序的主题配置。
+ * 
+ * @remarks
+ * 该组件接受一个 `children` 属性，用于渲染子组件。
+ * 
+ * @public
+ */
+
 'use client';
 
 import * as React from 'react';

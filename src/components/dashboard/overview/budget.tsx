@@ -1,3 +1,14 @@
+/**
+ * 这个文件包含了一个名为 Budget 的 React 组件。
+ * Budget 组件用于显示预算信息，包括预算数值、趋势和差异。
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <Budget value="1000" trend="up" diff={10} />
+ * ```
+ */
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';

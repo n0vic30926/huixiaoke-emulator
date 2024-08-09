@@ -1,3 +1,18 @@
+/**
+ * 这个文件是一个仪表板页面的组件，用于展示集成的信息。
+ * 
+ * 重要变量：
+ * - `metadata`: 用于定义页面的元数据，包括标题。
+ * - `integrations`: 一个包含不同集成信息的数组。
+ * 
+ * 重要函数：
+ * - `Page()`: 页面组件的主要函数，用于渲染页面的内容。
+ * 
+ * @fileoverview
+ * @module app/dashboard/integrations/page
+ * @packageDocumentation
+ */
+
 import * as React from 'react';
 import type { Metadata } from 'next';
 import Box from '@mui/material/Box';
@@ -10,7 +25,6 @@ import { Download as DownloadIcon } from '@phosphor-icons/react/dist/ssr/Downloa
 import { Plus as PlusIcon } from '@phosphor-icons/react/dist/ssr/Plus';
 import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
 import dayjs from 'dayjs';
-
 import { config } from '@/config';
 import { IntegrationCard } from '@/components/dashboard/integrations/integrations-card';
 import type { Integration } from '@/components/dashboard/integrations/integrations-card';

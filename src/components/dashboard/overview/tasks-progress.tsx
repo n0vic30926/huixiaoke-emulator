@@ -1,3 +1,17 @@
+/**
+ * 这个文件包含了一个名为 TasksProgress 的组件。
+ * TasksProgress 组件用于显示任务进度的卡片。
+ * 
+ * @remarks
+ * 该组件接受以下属性：
+ * - `value`：任务进度的值，取值范围为 0 到 100。
+ * - `sx`：可选的样式属性。
+ * 
+ * @param value - 任务进度的值。
+ * @param sx - 可选的样式属性。
+ * @returns 一个 React 元素，用于显示任务进度的卡片。
+ */
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';

@@ -1,3 +1,17 @@
+/**
+ * 这个文件定义了一个名为 LatestProducts 的 React 组件。
+ * 该组件用于显示最新产品的卡片列表。
+ *
+ * @remarks
+ * 重要的接口和类型：
+ * - `Product`：表示产品的接口，包含 `id`、`image`、`name` 和 `updatedAt` 属性。
+ * - `LatestProductsProps`：表示 LatestProducts 组件的属性，包含 `products` 和 `sx` 属性。
+ *
+ * @param products - 最新产品的数组，默认为空数组。
+ * @param sx - 可选的样式属性。
+ * @returns React 元素，表示最新产品的卡片列表。
+ */
+
 import React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';

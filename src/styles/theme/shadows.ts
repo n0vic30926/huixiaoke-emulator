@@ -1,3 +1,28 @@
+/**
+ * 这个文件定义了阴影的样式数组。
+ * 
+ * @module shadows
+ * @remarks
+ * 这个模块导出了一个名为 `shadows` 的数组，用于定义阴影的样式。
+ * 数组中的每个元素都是一个字符串，表示不同的阴影效果。
+ * 
+ * @typedef {string[]} Shadows
+ * @memberof module:shadows
+ * @summary
+ * `Shadows` 是一个字符串数组，用于定义阴影的样式。
+ * 
+ * @example
+ * import type { Shadows } from '@mui/material/styles/shadows';
+ * 
+ * export const shadows: Shadows = [
+ *   'none',
+ *   '0px 1px 2px rgba(0, 0, 0, 0.08)',
+ *   '0px 1px 5px rgba(0, 0, 0, 0.08)',
+ *   // ...
+ *   '0px 9px 46px rgba(0, 0, 0, 0.08)',
+ * ];
+ */
+
 import type { Shadows } from '@mui/material/styles/shadows';
 
 export const shadows = [

@@ -1,3 +1,15 @@
+/**
+ * 这个文件包含了一个名为 LatestOrders 的 React 组件，用于展示最新的订单信息。
+ * 
+ * @remarks
+ * 该组件接受一个名为 orders 的可选属性，用于传入订单数据数组。
+ * 
+ * @param orders - 订单数据数组，默认为空数组。
+ * @param sx - 可选的样式属性。
+ * 
+ * @returns React 元素，用于展示最新的订单信息。
+ */
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';

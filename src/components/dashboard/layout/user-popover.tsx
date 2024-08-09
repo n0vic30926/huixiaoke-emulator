@@ -1,3 +1,13 @@
+/**
+ * 用户弹出框组件
+ * 
+ * 该组件用于显示用户弹出框，包含用户信息和操作菜单。
+ * 
+ * @param anchorEl - 弹出框的锚点元素
+ * @param onClose - 关闭弹出框的回调函数
+ * @param open - 弹出框是否打开
+ */
+
 import * as React from 'react';
 import RouterLink from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -39,7 +49,6 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
 
       // Refresh the auth state
       await checkSession?.();
-
       // UserProvider, for this case, will not refresh the router and we need to do it manually
       router.refresh();
       // After refresh, AuthGuard will handle the redirect
@@ -48,6 +57,7 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
     }
   }, [checkSession, router]);
 
+  // 用户头像硬编码
   return (
     <Popover
       anchorEl={anchorEl}
@@ -56,10 +66,10 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
       open={open}
       slotProps={{ paper: { sx: { width: '240px' } } }}
     >
-      <Box sx={{ p: '16px 20px ' }}>
-        <Typography variant="subtitle1">Sofia Rivers</Typography>
+      <Box sx={{ p: '16px 20px ' }}> 
+        <Typography variant="subtitle1">Zhengxin</Typography>
         <Typography color="text.secondary" variant="body2">
-          sofia.rivers@devias.io
+          zhengxin@test.com
         </Typography>
       </Box>
       <Divider />
@@ -68,19 +78,19 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
           <ListItemIcon>
             <GearSixIcon fontSize="var(--icon-fontSize-md)" />
           </ListItemIcon>
-          Settings
+          设置
         </MenuItem>
         <MenuItem component={RouterLink} href={paths.dashboard.account} onClick={onClose}>
           <ListItemIcon>
             <UserIcon fontSize="var(--icon-fontSize-md)" />
           </ListItemIcon>
-          Profile
+          账户信息
         </MenuItem>
         <MenuItem onClick={handleSignOut}>
           <ListItemIcon>
             <SignOutIcon fontSize="var(--icon-fontSize-md)" />
           </ListItemIcon>
-          Sign out
+          注销
         </MenuItem>
       </MenuList>
     </Popover>

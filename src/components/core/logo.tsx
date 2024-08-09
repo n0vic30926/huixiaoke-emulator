@@ -1,9 +1,14 @@
+/**
+ * 这个文件包含了 Logo 组件和 DynamicLogo 组件的定义。
+ * Logo 组件用于显示一个 Logo 图标，可以设置颜色、是否显示徽标、高度和宽度。
+ * DynamicLogo 组件根据当前的颜色方案动态显示 Logo 图标，可以设置亮色和暗色的颜色、是否显示徽标、高度和宽度。
+ */
+
 'use client';
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useColorScheme } from '@mui/material/styles';
-
 import { NoSsr } from '@/components/core/no-ssr';
 
 const HEIGHT = 60;

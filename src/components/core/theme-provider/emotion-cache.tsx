@@ -1,3 +1,18 @@
+/**
+ * 这个文件是一个 Emotion 缓存提供者组件，用于在 Next.js 应用中提供 Emotion 缓存。
+ * 它接受以下属性：
+ * - options: 创建 Emotion 缓存时的选项，除了 insertionPoint。
+ * - CacheProvider: 自定义的缓存提供者组件，接受 value 和 children 属性。
+ * - children: 子组件。
+ *
+ * @remarks
+ * 这个组件在 Next.js 应用中使用，用于管理 Emotion 缓存，并在服务器端渲染时将样式插入到 HTML 中。
+ * 它包含以下重要变量和函数：
+ * - registry: 缓存注册表对象，包含 cache 和 flush 属性。
+ * - NextAppDirEmotionCacheProvider: Emotion 缓存提供者组件，接受上述属性。
+ * - useServerInsertedHTML: 用于在服务器端渲染时获取已插入的 HTML 元素。
+ */
+
 'use client';
 
 import * as React from 'react';
@@ -61,7 +76,7 @@ export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionC
 
       if (typeof style !== 'boolean') {
         if (isGlobal) {
-          globals.push({ name, style });
+          globals.push({ name, style: style || '' });
         } else {
           styles += style;
           dataEmotionAttribute += ` ${name}`;

@@ -1,3 +1,7 @@
+/**
+ * @description 该文件定义了上方导航栏组件(MainNav)，包含搜索、联系人、通知和用户头像等功能。
+ */
+
 'use client';
 
 import * as React from 'react';
@@ -21,7 +25,7 @@ export function MainNav(): React.JSX.Element {
   const [openNav, setOpenNav] = React.useState<boolean>(false);
 
   const userPopover = usePopover<HTMLDivElement>();
-
+  //  首页上方白色header, 包含搜索、联系人、通知、用户头像
   return (
     <React.Fragment>
       <Box

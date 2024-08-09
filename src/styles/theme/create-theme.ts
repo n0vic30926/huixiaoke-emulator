@@ -1,5 +1,13 @@
-import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
+/**
+ * 这个文件是用于创建主题的。
+ * 
+ * @remarks
+ * 这个文件导出了一个名为`createTheme`的函数，用于创建主题对象。
+ * 
+ * @returns {Theme} - 创建的主题对象。
+ */
 
+import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
 import { colorSchemes } from './color-schemes';
 import { components } from './components/components';
 import { shadows } from './shadows';

@@ -1,3 +1,43 @@
+/**
+ * @description 移动端导航栏组件，包含首页左上角和左下角 Logo、workspace和导航栏
+ * 
+ * @typedef {Object} NavItemConfig 导航项配置对象
+ * @property {string} key 导航项的唯一标识
+ * @property {string} title 导航项的标题
+ * @property {string} href 导航项的链接地址
+ * @property {string} icon 导航项的图标名称
+ * @property {boolean} disabled 导航项是否禁用
+ * @property {boolean} external 导航项是否为外部链接
+ * @property {string} matcher 导航项的匹配规则
+ * 
+ * @typedef {Object} MobileNavProps 移动端导航栏组件的属性
+ * @property {() => void} [onClose] 关闭导航栏的回调函数
+ * @property {boolean} [open] 导航栏是否打开
+ * @property {NavItemConfig[]} [items] 导航栏的导航项配置数组
+ * 
+ * @function MobileNav 移动端导航栏组件
+ * @param {MobileNavProps} props 移动端导航栏组件的属性
+ * @returns {JSX.Element} 移动端导航栏组件的 JSX 元素
+ * 
+ * @function renderNavItems 渲染导航项列表
+ * @param {Object} options 渲染导航项列表的选项
+ * @param {NavItemConfig[]} [options.items] 导航项配置数组
+ * @param {string} options.pathname 当前路径名
+ * @returns {JSX.Element} 导航项列表的 JSX 元素
+ * 
+ * @function NavItem 导航项组件
+ * @param {NavItemProps} props 导航项组件的属性
+ * @returns {JSX.Element} 导航项组件的 JSX 元素
+ * 
+ * @typedef {Object} NavItemProps 导航项组件的属性
+ * @property {string} pathname 当前路径名
+ * @property {boolean} [disabled] 导航项是否禁用
+ * @property {boolean} [external] 导航项是否为外部链接
+ * @property {string} [href] 导航项的链接地址
+ * @property {string} [icon] 导航项的图标名称
+ * @property {string} title 导航项的标题
+ */
+
 'use client';
 
 import * as React from 'react';
@@ -19,6 +59,8 @@ import { Logo } from '@/components/core/logo';
 
 import { navItems } from './config';
 import { navIcons } from './nav-icons';
+
+// 首页左上角和左下角 Logo，workspace和导航栏，移动端
 
 export interface MobileNavProps {
   onClose?: () => void;

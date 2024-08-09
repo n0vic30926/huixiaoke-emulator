@@ -1,3 +1,17 @@
+/**
+ * 这个文件是一个身份验证守卫组件，用于保护需要登录才能访问的页面。
+ * 它会检查用户的登录状态，并根据情况进行相应的处理。
+ * 如果用户未登录，则会重定向到登录页面。
+ * 如果发生错误，则会显示一个错误提示。
+ * 
+ * @component
+ * @example
+ * // 使用示例
+ * <AuthGuard>
+ *   <ProtectedContent />
+ * </AuthGuard>
+ */
+
 'use client';
 
 import * as React from 'react';

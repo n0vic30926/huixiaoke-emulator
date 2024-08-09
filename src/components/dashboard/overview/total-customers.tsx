@@ -1,3 +1,15 @@
+/**
+ * 这个文件包含了一个名为 TotalCustomers 的 React 组件。
+ * 该组件用于显示总客户数的概览卡片。
+ * 
+ * @remarks
+ * 该组件接受以下属性：
+ * - `diff`：上个月的客户数变化百分比（可选）
+ * - `trend`：客户数变化趋势，可以是 'up' 或 'down'
+ * - `sx`：组件的样式属性（可选）
+ * - `value`：总客户数的值
+ */
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';

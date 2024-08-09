@@ -1,3 +1,16 @@
+/**
+ * 这个文件是左侧导航栏的组件，用于显示网站的导航菜单。
+ * 
+ * @remarks
+ * 该组件包含以下功能：
+ * - 显示网站的Logo
+ * - 显示工作区信息
+ * - 渲染导航菜单项
+ * - 显示Pro版本信息和链接
+ * - 为网页端和移动端提供不同的展示方式
+ * @packageDocumentation
+ */
+
 'use client';
 
 import * as React from 'react';
@@ -81,7 +94,7 @@ export function SideNav(): React.JSX.Element {
         {renderNavItems({ pathname, items: navItems })}
       </Box>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
-      <Stack spacing={2} sx={{ p: '12px' }}>
+      <Stack spacing={2} sx={{ p: '12px' }}> 
         <div>
           <Typography color="var(--mui-palette-neutral-100)" variant="subtitle2">
             Need more features?

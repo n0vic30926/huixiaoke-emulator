@@ -1,7 +1,14 @@
+/**
+ * 这个文件是用户上下文的定义和提供者。
+ * 它导出了一个名为`UserContext`的React上下文，用于在应用程序中共享用户信息。
+ * `UserContext`提供了一个名为`checkSession`的方法，用于检查用户会话并更新上下文状态。
+ * `UserProvider`组件是`UserContext`的提供者，它使用React的`useState`和`useEffect`钩子来管理上下文状态。
+ * 它还导出了一个名为`UserConsumer`的消费者，用于在应用程序中访问`UserContext`的值。
+ */
+
 'use client';
 
 import * as React from 'react';
-
 import type { User } from '@/types/user';
 import { authClient } from '@/lib/auth/client';
 import { logger } from '@/lib/default-logger';

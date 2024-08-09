@@ -1,3 +1,11 @@
+/**
+ * 这个文件定义了一个名为 `typography` 的对象，用于设置主题中的字体样式。
+ * 
+ * @remarks
+ * `typography` 对象包含了各种字体样式的定义，如正文、按钮、标题等。
+ * 
+ */
+
 import type { TypographyOptions } from '@mui/material/styles/createTypography';
 
 export const typography = {

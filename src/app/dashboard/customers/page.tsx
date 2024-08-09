@@ -1,3 +1,14 @@
+/**
+ * 这个文件是一个仪表盘页面的组件，用于展示客户信息。
+ * 
+ * @remarks
+ * 这个页面包含以下重要变量和函数：
+ * - `metadata`: 用于定义页面的元数据，包括标题。
+ * - `customers`: 一个包含客户信息的数组。
+ * - `Page`: 页面组件，用于渲染客户信息的展示和操作。
+ * - `applyPagination`: 一个用于对客户信息进行分页的函数。
+ */
+
 import * as React from 'react';
 import type { Metadata } from 'next';
 import Button from '@mui/material/Button';
@@ -7,7 +18,6 @@ import { Download as DownloadIcon } from '@phosphor-icons/react/dist/ssr/Downloa
 import { Plus as PlusIcon } from '@phosphor-icons/react/dist/ssr/Plus';
 import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
 import dayjs from 'dayjs';
-
 import { config } from '@/config';
 import { CustomersFilters } from '@/components/dashboard/customer/customers-filters';
 import { CustomersTable } from '@/components/dashboard/customer/customers-table';

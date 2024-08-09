@@ -1,3 +1,38 @@
+
+/**
+ * @fileoverview
+ * 这个文件包含了一个名为 `CustomersTable` 的 React 组件。
+ * `CustomersTable` 组件用于展示客户列表的表格，并提供了选择客户的功能。
+ */
+
+/**
+ * @typedef {Object} Customer
+ * @property {string} id - 客户的唯一标识符
+ * @property {string} avatar - 客户的头像
+ * @property {string} name - 客户的姓名
+ * @property {string} email - 客户的电子邮件
+ * @property {Object} address - 客户的地址信息
+ * @property {string} address.city - 客户所在城市
+ * @property {string} address.state - 客户所在州/省
+ * @property {string} address.country - 客户所在国家
+ * @property {string} address.street - 客户所在街道
+ * @property {string} phone - 客户的电话号码
+ * @property {Date} createdAt - 客户的注册日期
+ */
+
+/**
+ * @typedef {Object} CustomersTableProps
+ * @property {number} [count] - 客户总数
+ * @property {number} [page] - 当前页码
+ * @property {Customer[]} [rows] - 客户列表
+ * @property {number} [rowsPerPage] - 每页显示的客户数量
+ */
+
+/**
+ * @param {CustomersTableProps} props - 组件的属性
+ * @returns {JSX.Element} - 返回一个 React 元素，用于展示客户列表的表格
+ */
+
 'use client';
 
 import * as React from 'react';
@@ -15,7 +50,6 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
-
 import { useSelection } from '@/hooks/use-selection';
 
 function noop(): void {

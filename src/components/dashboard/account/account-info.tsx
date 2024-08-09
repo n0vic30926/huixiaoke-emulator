@@ -1,3 +1,12 @@
+/**
+ * 这个文件是账户信息组件的实现。
+ * 
+ * @remarks
+ * 这个组件用于显示用户的账户信息，包括姓名、头像、职位、所在国家和城市、时区等。
+ * 
+ * @public
+ */
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';

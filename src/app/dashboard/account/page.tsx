@@ -1,3 +1,15 @@
+/**
+ * 这个文件是一个账户页面的组件。
+ * 它包含了一个用于显示账户信息和账户详情表单的页面。
+ * 
+ * @remarks
+ * 重要变量：
+ * - `metadata`：用于定义页面的元数据，包括标题。
+ * 
+ * 重要函数：
+ * - `Page`：页面组件的主要函数，用于渲染账户页面的内容。
+ */
+
 import * as React from 'react';
 import type { Metadata } from 'next';
 import Stack from '@mui/material/Stack';

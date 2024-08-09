@@ -1,3 +1,10 @@
+/**
+ * 此文件包含一个名为 UpdatePasswordForm 的函数组件。
+ * 该组件用于显示一个更新密码的表单。
+ * 
+ * @returns 返回一个 JSX 元素，表示更新密码的表单。
+ */
+
 'use client';
 
 import * as React from 'react';

@@ -1,3 +1,12 @@
+/**
+ * 该文件包含一个用于重置密码的表单组件。
+ * 
+ * @remarks
+ * 该组件使用 `react-hook-form` 和 `@mui/material` 库来实现表单验证和界面渲染。
+ * 
+ * @packageDocumentation
+ */
+
 'use client';
 
 import * as React from 'react';

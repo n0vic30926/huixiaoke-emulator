@@ -1,3 +1,12 @@
+/**
+ * 这个文件定义了一个名为 `useSelection` 的自定义 Hook，用于处理选择逻辑。
+ *
+ * @param {T[]} keys - 一个可选的键数组，用于初始化选择状态。
+ * @returns {Selection<T>} - 一个包含选择相关方法和状态的对象。
+ *
+ * @template T - 泛型参数，表示选择项的类型。
+ */
+
 import * as React from 'react';
 
 export interface Selection<T = string> {

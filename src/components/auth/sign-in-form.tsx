@@ -1,3 +1,21 @@
+/**
+ * 这个文件包含了一个登录表单组件 `SignInForm`，用于用户登录操作。
+ * 
+ * @remarks
+ * 重要变量：
+ * - `defaultValues`：表单的默认值，包括邮箱地址和密码。
+ * - `schema`：用于验证表单输入的 Zod 模式。
+ * - `router`：用于导航到其他页面的 Next.js 路由对象。
+ * - `showPassword`：控制密码输入框是否显示明文密码。
+ * - `isPending`：表示登录请求是否正在进行中。
+ * 
+ * 重要函数：
+ * - `onSubmit`：表单提交时的处理函数，用于进行登录操作。
+ * - `useUser`：自定义 Hook，用于获取用户信息和检查会话状态。
+ * 
+ * @packageDocumentation
+ */
+
 'use client';
 
 import * as React from 'react';
@@ -23,13 +41,13 @@ import { authClient } from '@/lib/auth/client';
 import { useUser } from '@/hooks/use-user';
 
 const schema = zod.object({
-  email: zod.string().min(1, { message: 'Email is required' }).email(),
-  password: zod.string().min(1, { message: 'Password is required' }),
+  email: zod.string().min(1, { message: '邮箱地址不能为空' }).email(),
+  password: zod.string().min(1, { message: '密码不能为空' }),
 });
 
 type Values = zod.infer<typeof schema>;
 
-const defaultValues = { email: 'sofia@devias.io', password: 'Secret1' } satisfies Values;
+const defaultValues = { email: 'zhengxin@test.com', password: 'zhengxin' } satisfies Values;
 
 export function SignInForm(): React.JSX.Element {
   const router = useRouter();
@@ -72,11 +90,11 @@ export function SignInForm(): React.JSX.Element {
   return (
     <Stack spacing={4}>
       <Stack spacing={1}>
-        <Typography variant="h4">Sign in</Typography>
+        <Typography variant="h4">登录</Typography>
         <Typography color="text.secondary" variant="body2">
-          Don&apos;t have an account?{' '}
+          还没有注册？{' '}
           <Link component={RouterLink} href={paths.auth.signUp} underline="hover" variant="subtitle2">
-            Sign up
+            注册
           </Link>
         </Typography>
       </Stack>
@@ -87,7 +105,7 @@ export function SignInForm(): React.JSX.Element {
             name="email"
             render={({ field }) => (
               <FormControl error={Boolean(errors.email)}>
-                <InputLabel>Email address</InputLabel>
+                <InputLabel>邮箱地址</InputLabel>
                 <OutlinedInput {...field} label="Email address" type="email" />
                 {errors.email ? <FormHelperText>{errors.email.message}</FormHelperText> : null}
               </FormControl>
@@ -98,7 +116,7 @@ export function SignInForm(): React.JSX.Element {
             name="password"
             render={({ field }) => (
               <FormControl error={Boolean(errors.password)}>
-                <InputLabel>Password</InputLabel>
+                <InputLabel>密码</InputLabel>
                 <OutlinedInput
                   {...field}
                   endAdornment={
@@ -129,23 +147,23 @@ export function SignInForm(): React.JSX.Element {
           />
           <div>
             <Link component={RouterLink} href={paths.auth.resetPassword} variant="subtitle2">
-              Forgot password?
+              忘记密码？
             </Link>
           </div>
           {errors.root ? <Alert color="error">{errors.root.message}</Alert> : null}
           <Button disabled={isPending} type="submit" variant="contained">
-            Sign in
+            登录
           </Button>
         </Stack>
       </form>
       <Alert color="warning">
-        Use{' '}
+        使用测试账户{' '}
         <Typography component="span" sx={{ fontWeight: 700 }} variant="inherit">
-          sofia@devias.io
+          zhengxin@test.com
         </Typography>{' '}
-        with password{' '}
+        和对应密码{' '}
         <Typography component="span" sx={{ fontWeight: 700 }} variant="inherit">
-          Secret1
+          zhengxin
         </Typography>
       </Alert>
     </Stack>

@@ -1,3 +1,15 @@
+/**
+ * 这个文件包含了 Traffic 组件的定义和相关函数。
+ * Traffic 组件用于显示流量来源的统计信息。
+ * 
+ * @remarks
+ * - `TrafficProps` 接口定义了组件的属性，包括 `chartSeries` 和 `labels`。
+ * - `chartSeries` 是一个数字数组，表示不同来源的流量百分比。
+ * - `labels` 是一个字符串数组，表示不同来源的标签。
+ * - `Traffic` 组件接受 `chartSeries`、`labels` 和 `sx` 属性，并返回一个 JSX 元素。
+ * - `useChartOptions` 函数根据标签生成 ApexCharts 的配置选项。
+ */
+
 'use client';
 
 import * as React from 'react';

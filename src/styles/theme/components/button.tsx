@@ -1,5 +1,12 @@
-import type { Components } from '@mui/material/styles';
+/**
+ * 这个文件是用于定制 MUI Button 组件的样式的。
+ * 它导出了一个名为 `MuiButton` 的对象，该对象包含了对 Button 组件样式的定制。
+ * 通过修改 `styleOverrides` 属性，可以改变 Button 组件的根元素样式以及不同尺寸和文本大小的样式。
+ * 
+ * @packageDocumentation
+ */
 
+import type { Components } from '@mui/material/styles';
 import type { Theme } from '../types';
 
 export const MuiButton = {

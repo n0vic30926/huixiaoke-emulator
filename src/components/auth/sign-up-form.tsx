@@ -1,3 +1,29 @@
+/**
+ * 这个文件包含了一个名为 SignUpForm 的 React 组件，用于展示注册表单。
+ * 
+ * @remarks
+ * 这个组件依赖于以下第三方库：
+ * - `react`
+ * - `next/link`
+ * - `next/navigation`
+ * - `@hookform/resolvers/zod`
+ * - `@mui/material`
+ * - `react-hook-form`
+ * - `zod`
+ * 
+ * @remarks
+ * 重要变量：
+ * - `defaultValues`：表单的默认值对象，包含了 `firstName`、`lastName`、`email`、`password` 和 `terms` 字段。
+ * - `schema`：用于验证表单字段的 Zod 模式对象。
+ * - `Values`：根据 `schema` 推断出的表单值类型。
+ * 
+ * @remarks
+ * 重要函数：
+ * - `onSubmit`：表单提交时的回调函数，用于处理表单数据的提交逻辑。
+ * 
+ * @public
+ */
+
 'use client';
 
 import * as React from 'react';

@@ -1,3 +1,19 @@
+/**
+ * 这个文件包含了一个名为 IntegrationCard 的 React 组件，用于显示集成卡片。
+ * 
+ * @remarks
+ * `IntegrationCard` 组件接受一个 `integration` 对象作为属性，该对象包含以下属性：
+ * - `id`：集成的唯一标识符
+ * - `title`：集成的标题
+ * - `description`：集成的描述
+ * - `logo`：集成的标志图片
+ * - `installs`：集成的安装数量
+ * - `updatedAt`：集成的最后更新时间
+ * 
+ * @param integration - 集成对象
+ * @returns React 元素
+ */
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -22,6 +38,7 @@ export interface Integration {
 export interface IntegrationCardProps {
   integration: Integration;
 }
+
 
 export function IntegrationCard({ integration }: IntegrationCardProps): React.JSX.Element {
   return (
