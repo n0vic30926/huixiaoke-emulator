@@ -11,15 +11,22 @@
 import * as React from 'react';
 import type { Metadata } from 'next';
 import Grid from '@mui/material/Unstable_Grid2';
+import Typography from '@mui/material/Typography';
 import { config } from '@/config';
 import { InfoCard } from '@/components/dashboard/overview/homepage_infocard';
+import { paths } from '@/paths';
 
 export const metadata = { title: `Overview | Dashboard | ${config.site.name}` } satisfies Metadata;
 
 export default function Page(): React.JSX.Element {
   return (
     <Grid container spacing={2}>
-      <Grid  lg={6} sm={12} xs={12} display="flex" justifyContent="center">
+      <Grid xs={12} sx={{ mb: 2 }}>
+        <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
+          热门角色
+        </Typography>
+      </Grid>
+      <Grid lg={6} sm={12} xs={12} display="flex" justifyContent="center">
         <InfoCard 
           sx={{ height: '100%', maxWidth: '500px' }} 
           image="/assets/月老.png" 
@@ -27,10 +34,11 @@ export default function Page(): React.JSX.Element {
           description="月老，别名柴道煌，民间又称月下老人、月下老儿，是汉族民间传说中主管婚姻的红喜神"
           tags={['传统文化', '情感']} 
           creator="张三" 
-          creatorAvatar="/assets/avatar-1.png" 
+          creatorAvatar="/assets/avatar-1.png"
+          link = {paths.yuelao}
         />
       </Grid>
-      <Grid  lg={6} sm={12} xs={12} display="flex" justifyContent="center">
+      <Grid lg={6} sm={12} xs={12} display="flex" justifyContent="center">
         <InfoCard 
           sx={{ height: '100%', maxWidth: '500px' }} 
           image="/assets/红娘.png" 
@@ -39,9 +47,11 @@ export default function Page(): React.JSX.Element {
           tags={['传统文化', '情感']} 
           creator="张三" 
           creatorAvatar="/assets/avatar-1.png" 
+          link = {paths.hongniang}
         />
       </Grid>
     </Grid>
   );
 }
+
 

@@ -59,12 +59,12 @@ export function MainNav(): React.JSX.Element {
             </Tooltip>
           </Stack>
           <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
-            <Tooltip title="Contacts">
+            <Tooltip title="联系我们">
               <IconButton>
                 <UsersIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Notifications">
+            <Tooltip title="通知">
               <Badge badgeContent={4} color="success" variant="dot">
                 <IconButton>
                   <BellIcon />
@@ -74,7 +74,7 @@ export function MainNav(): React.JSX.Element {
             <Avatar
               onClick={userPopover.handleOpen}
               ref={userPopover.anchorRef}
-              src="/assets/avatar.png"
+              src="/assets/用户.png"
               sx={{ cursor: 'pointer' }}
             />
           </Stack>

@@ -21,6 +21,7 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
 import { ArrowSquareUpRight as ArrowSquareUpRightIcon } from '@phosphor-icons/react/dist/ssr/ArrowSquareUpRight';
 import { CaretUpDown as CaretUpDownIcon } from '@phosphor-icons/react/dist/ssr/CaretUpDown';
 
@@ -67,62 +68,70 @@ export function SideNav(): React.JSX.Element {
         <Box component={RouterLink} href={paths.home} sx={{ display: 'inline-flex' }}>
           <Logo color="light" height={32} width={122} />
         </Box>
-        <Box
-          sx={{
-            alignItems: 'center',
-            backgroundColor: 'var(--mui-palette-neutral-950)',
-            border: '1px solid var(--mui-palette-neutral-700)',
-            borderRadius: '12px',
-            cursor: 'pointer',
-            display: 'flex',
-            p: '4px 12px',
-          }}
-        >
-          <Box sx={{ flex: '1 1 auto' }}>
-            <Typography color="var(--mui-palette-neutral-400)" variant="body2">
-              Workspace
-            </Typography>
-            <Typography color="inherit" variant="subtitle1">
-              Devias
-            </Typography>
-          </Box>
-          <CaretUpDownIcon />
-        </Box>
-      </Stack>
+          <Button 
+            component={RouterLink} 
+            href={paths.createCharacter}  // 使用路径常量定义新建角色页面的URL
+            variant="contained" 
+            color="primary"
+            fullWidth
+          >
+            新建角色
+          </Button>
+
+          </Stack>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
       <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>
         {renderNavItems({ pathname, items: navItems })}
       </Box>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
       <Stack spacing={2} sx={{ p: '12px' }}> 
-        <div>
-          <Typography color="var(--mui-palette-neutral-100)" variant="subtitle2">
-            Need more features?
-          </Typography>
-          <Typography color="var(--mui-palette-neutral-400)" variant="body2">
-            Check out our Pro solution template.
-          </Typography>
-        </div>
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Box
-            component="img"
-            alt="Pro version"
-            src="/assets/devias-kit-pro.png"
-            sx={{ height: 'auto', width: '160px' }}
-          />
-        </Box>
-        <Button
-          component="a"
-          endIcon={<ArrowSquareUpRightIcon fontSize="var(--icon-fontSize-md)" />}
-          fullWidth
-          href="https://material-kit-pro-react.devias.io/"
-          sx={{ mt: 2 }}
-          target="_blank"
-          variant="contained"
-        >
-          Pro version
-        </Button>
+        <Typography color="var(--mui-palette-neutral-100)" variant="subtitle2">
+          最近聊天
+        </Typography>
+        <ChatItem 
+          image="/assets/月老.png" 
+          name="月老" 
+          description="生命中遇到的人总能教会你些什么" 
+          href = {paths.yuelao}
+        />
+        <ChatItem 
+          image="/assets/红娘.png" 
+          name="红娘" 
+          description="红娘的形象在文学作品中经历了从模糊到具体的发展过程" 
+          href = {paths.hongniang}
+        />
       </Stack>
+    </Box>
+  );
+}
+
+function ChatItem({ image, name, description, href }: { image: string; name: string; description: string; href: string }) {
+  return (
+    <Box
+      component={RouterLink}
+      href={href}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        textDecoration: 'none',
+        mb: 2,
+        p: 1,
+        borderRadius: 1,
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        '&:hover': {
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        },
+      }}
+    >
+      <Avatar src={image} sx={{ width: 48, height: 48, mr: 2 }} />
+      <Box>
+        <Typography variant="body1" color="common.white">
+          {name}
+        </Typography>
+        <Typography variant="body2" color="common.white">
+          {description}
+        </Typography>
+      </Box>
     </Box>
   );
 }

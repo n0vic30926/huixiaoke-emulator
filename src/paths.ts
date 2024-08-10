@@ -25,5 +25,9 @@ export const paths = {
     integrations: '/dashboard/integrations',
     settings: '/dashboard/settings',
   },
+  yuelao: '/moon-elder',
+  hongniang: '/red-matchmaker',
+  createCharacter: '/create-character',
+  myCharacters: '/my-characters',
   errors: { notFound: '/errors/not-found' },
 } as const;
