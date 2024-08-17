@@ -147,17 +147,7 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
             sx={{ height: 'auto', width: '160px' }}
           />
         </Box>
-        <Button
-          component="a"
-          endIcon={<ArrowSquareUpRightIcon fontSize="var(--icon-fontSize-md)" />}
-          fullWidth
-          href="https://material-kit-pro-react.devias.io/"
-          sx={{ mt: 2 }}
-          target="_blank"
-          variant="contained"
-        >
-          Pro version
-        </Button>
+
       </Stack>
     </Drawer>
   );
