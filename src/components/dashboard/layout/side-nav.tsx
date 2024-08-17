@@ -1,6 +1,6 @@
 /**
  * 这个文件是左侧导航栏的组件，用于显示网站的导航菜单。
- * 
+ *
  * @remarks
  * 该组件包含以下功能：
  * - 显示网站的Logo
@@ -39,7 +39,7 @@ export function SideNav(): React.JSX.Element {
   return (
     <Box
       sx={{
-        '--SideNav-background': 'var(--mui-palette-neutral-950)',
+        '--SideNav-background': '#f0f0f0',
         '--SideNav-color': 'var(--mui-palette-common-white)',
         '--NavItem-color': 'var(--mui-palette-neutral-300)',
         '--NavItem-hover-background': 'rgba(255, 255, 255, 0.04)',
@@ -68,10 +68,10 @@ export function SideNav(): React.JSX.Element {
         <Box component={RouterLink} href={paths.home} sx={{ display: 'inline-flex' }}>
           <Logo color="light" height={32} width={122} />
         </Box>
-          <Button 
-            component={RouterLink} 
+          <Button
+            component={RouterLink}
             href={paths.createCharacter}  // 使用路径常量定义新建角色页面的URL
-            variant="contained" 
+            variant="contained"
             color="primary"
             fullWidth
           >
@@ -84,20 +84,20 @@ export function SideNav(): React.JSX.Element {
         {renderNavItems({ pathname, items: navItems })}
       </Box>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
-      <Stack spacing={2} sx={{ p: '12px' }}> 
+      <Stack spacing={2} sx={{ p: '12px' }}>
         <Typography color="var(--mui-palette-neutral-100)" variant="subtitle2">
           最近聊天
         </Typography>
-        <ChatItem 
-          image="/assets/月老.png" 
-          name="月老" 
-          description="生命中遇到的人总能教会你些什么" 
+        <ChatItem
+          image="/assets/月老.png"
+          name="月老"
+          description="生命中遇到的人总能教会你些什么"
           href = {paths.yuelao}
         />
-        <ChatItem 
-          image="/assets/红娘.png" 
-          name="红娘" 
-          description="红娘的形象在文学作品中经历了从模糊到具体的发展过程" 
+        <ChatItem
+          image="/assets/红娘.png"
+          name="红娘"
+          description="红娘的形象在文学作品中经历了从模糊到具体的发展过程"
           href = {paths.hongniang}
         />
       </Stack>
