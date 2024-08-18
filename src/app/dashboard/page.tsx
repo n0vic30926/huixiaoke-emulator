@@ -33,7 +33,7 @@ export default function Page(): React.JSX.Element {
           title="月老" 
           description="月老，别名柴道煌，民间又称月下老人、月下老儿，是汉族民间传说中主管婚姻的红喜神"
           tags={['传统文化', '情感']} 
-          creator="张三" 
+          creator="慧小可" 
           creatorAvatar="/assets/avatar-1.png"
           link = {paths.yuelao}
         />
@@ -45,7 +45,7 @@ export default function Page(): React.JSX.Element {
           title="红娘" 
           description="红娘的形象在文学作品中经历了从模糊到具体的发展过程，‌从《‌莺莺传》‌中的次要角色，‌到《‌西厢记》‌中的..."
           tags={['传统文化', '情感']} 
-          creator="张三" 
+          creator="慧小可" 
           creatorAvatar="/assets/avatar-1.png" 
           link = {paths.hongniang}
         />

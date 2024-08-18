@@ -17,6 +17,7 @@ import * as React from 'react';
 import RouterLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import Box from '@mui/material/Box';
+import Link from 'next/link'; // 确保导入 Link 组件
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
@@ -85,21 +86,31 @@ export function SideNav(): React.JSX.Element {
       </Box>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
       <Stack spacing={2} sx={{ p: '12px' }}>
-        <Typography color="var(--mui-palette-neutral-100)" variant="subtitle2">
-          最近聊天
-        </Typography>
-        <ChatItem
-          image="/assets/月老.png"
-          name="月老"
-          description="生命中遇到的人总能教会你些什么"
-          href = {paths.yuelao}
-        />
-        <ChatItem
-          image="/assets/红娘.png"
-          name="红娘"
-          description="红娘的形象在文学作品中经历了从模糊到具体的发展过程"
-          href = {paths.hongniang}
-        />
+      <Typography color="text.primary" variant="subtitle2" sx={{ fontWeight: 'bold', fontSize: '1.25rem' }}>
+        最近聊天
+      </Typography>
+        
+        <Link href="/chat/yuelao" passHref>
+          <Box sx={{ display: 'inline-flex' }}>
+            <ChatItem 
+              image="/assets/月老.png" 
+              name="月老" 
+              description="生命中遇到的人总能教会你些什么" 
+              href = "/chat/yuelao"
+            />
+          </Box>
+        </Link>
+        <Link href="/chat/hongniang" passHref>
+          <Box sx={{ display: 'inline-flex' }}>
+            <ChatItem 
+              image="/assets/红娘.png" 
+              name="红娘" 
+              description="红娘的形象在文学作品中经历了从模糊到具体的发展过程" 
+              href = "/chat/hongniang"
+            />
+          </Box>
+        </Link>
+
       </Stack>
     </Box>
   );
@@ -125,10 +136,10 @@ function ChatItem({ image, name, description, href }: { image: string; name: str
     >
       <Avatar src={image} sx={{ width: 48, height: 48, mr: 2 }} />
       <Box>
-        <Typography variant="body1" color="common.white">
-          {name}
-        </Typography>
-        <Typography variant="body2" color="common.white">
+      <Typography variant="body1" color="text.primary" sx={{ fontWeight: 'bold' }}>
+        {name}
+      </Typography>
+        <Typography variant="body2" color="#B0B0B0">
           {description}
         </Typography>
       </Box>

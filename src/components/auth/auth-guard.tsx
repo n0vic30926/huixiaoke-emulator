@@ -42,9 +42,10 @@ export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | nul
     }
 
     if (!user) {
-      logger.debug('[AuthGuard]: User is not logged in, redirecting to sign in');
-      router.replace(paths.auth.signIn);
-      return;
+      /*测试需要，暂时不检查*/
+      // logger.debug('[AuthGuard]: User is not logged in, redirecting to sign in');
+      // router.replace(paths.auth.signIn);
+      // return;
     }
 
     setIsChecking(false);

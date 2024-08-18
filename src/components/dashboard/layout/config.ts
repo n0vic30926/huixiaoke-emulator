@@ -10,9 +10,9 @@ import { paths } from '@/paths';
 
 export const navItems = [
   { key: 'overview', title: '主页', href: paths.dashboard.overview, icon: 'chart-pie' },
-  { key: 'customers', title: '我的角色', href: paths.myCharacters, icon: 'users' },
-  { key: 'integrations', title: 'Integrations', href: paths.dashboard.integrations, icon: 'plugs-connected' },
-  { key: 'settings', title: '设置', href: paths.dashboard.settings, icon: 'gear-six' },
+  // { key: 'customers', title: '我的角色', href: paths.myCharacters, icon: 'users' },
+  // { key: 'integrations', title: 'Integrations', href: paths.dashboard.integrations, icon: 'plugs-connected' },
+  // { key: 'settings', title: '设置', href: paths.dashboard.settings, icon: 'gear-six' },
   { key: 'account', title: '账户', href: paths.dashboard.account, icon: 'user' },
-  { key: 'error', title: 'Error', href: paths.errors.notFound, icon: 'x-square' },
+  // { key: 'error', title: 'Error', href: paths.errors.notFound, icon: 'x-square' },
 ] satisfies NavItemConfig[];

@@ -133,7 +133,7 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
       <Stack spacing={2} sx={{ p: '12px' }}>
         <div>
           <Typography color="var(--mui-palette-neutral-100)" variant="subtitle2">
-            Need more features?
+          最近聊天
           </Typography>
           <Typography color="var(--mui-palette-neutral-400)" variant="body2">
             Check out our Pro solution template.

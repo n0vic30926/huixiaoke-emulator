@@ -18,12 +18,12 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 const user = {
-  name: 'Sofia Rivers',
+  name: '慧小可用户',
   avatar: '/assets/avatar.png',
-  jobTitle: 'Senior Developer',
-  country: 'USA',
-  city: 'Los Angeles',
-  timezone: 'GTM-7',
+  // jobTitle: 'Senior Developer',
+  country: '中国',
+  city: '大陆',
+  // timezone: 'GTM-7',
 } as const;
 
 export function AccountInfo(): React.JSX.Element {
@@ -37,7 +37,7 @@ export function AccountInfo(): React.JSX.Element {
           <Stack spacing={1} sx={{ textAlign: 'center' }}>
             <Typography variant="h5">{user.name}</Typography>
             <Typography color="text.secondary" variant="body2">
-              {user.city} {user.country}
+             {user.country} {user.city} 
             </Typography>
             <Typography color="text.secondary" variant="body2">
               {user.timezone}
@@ -48,7 +48,7 @@ export function AccountInfo(): React.JSX.Element {
       <Divider />
       <CardActions>
         <Button fullWidth variant="text">
-          Upload picture
+          上传头像
         </Button>
       </CardActions>
     </Card>
