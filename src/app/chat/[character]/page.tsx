@@ -65,7 +65,7 @@ export default function Page(): React.JSX.Element {
       // 保存聊天记录到 localStorage
       localStorage.setItem(`chat_history_${character}`, JSON.stringify(newMessages));
 
-      // 发送请求到后端
+      // 发送请求到后端，将所有聊天记录传递给后端以支持多轮对话
       const response = await fetch('https://llm-abggoprivx.cn-hangzhou.fcapp.run/', {
         method: 'POST',
         headers: {
@@ -73,7 +73,7 @@ export default function Page(): React.JSX.Element {
         },
         body: JSON.stringify({
           role: character,
-          messages: [{ role: 'user', content: message }],
+          messages: newMessages.map(msg => ({ role: msg.sender, content: msg.text })),
         }),
       });
 
