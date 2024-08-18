@@ -10,9 +10,11 @@
 
 export interface User {
   id: string;
-  name?: string;
-  avatar?: string;
-  email?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  avatar?: string;  // Optional, since your current model does not include an avatar.
+  fullName?: string;  // You can include this if you prefer to handle the full name in your UI components.
 
   [key: string]: unknown;
 }

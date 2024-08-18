@@ -37,7 +37,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { z as zod } from 'zod';
 
 import { paths } from '@/paths';
-import { authClient } from '@/lib/auth/client';
 import { useUser } from '@/hooks/use-user';
 
 const schema = zod.object({
@@ -47,12 +46,9 @@ const schema = zod.object({
 
 type Values = zod.infer<typeof schema>;
 
-const defaultValues = { email: 'zhengxin@test.com', password: 'zhengxin' } satisfies Values;
-
 export function SignInForm(): React.JSX.Element {
   const router = useRouter();
-
-  const { checkSession } = useUser();
+  const { setUser } = useUser();  // 获取setUser方法
 
   const [showPassword, setShowPassword] = React.useState<boolean>();
 
@@ -63,30 +59,39 @@ export function SignInForm(): React.JSX.Element {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<Values>({ defaultValues, resolver: zodResolver(schema) });
+  } = useForm<Values>({ resolver: zodResolver(schema) });
 
   const onSubmit = React.useCallback(
     async (values: Values): Promise<void> => {
       setIsPending(true);
-
-      const { error } = await authClient.signInWithPassword(values);
-
-      if (error) {
-        setError('root', { type: 'server', message: error });
+  
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+  
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Error logging in');
+        }
+  
+        const userData = await response.json();
+        setUser(userData.user);  // 可以忽略的错误
+  
+        router.push(paths.home);  // Redirect to the homepage
+      } catch (error) {
+        setError('root', { type: 'server', message: (error as Error).message });
+      } finally {
         setIsPending(false);
-        return;
       }
-
-      // Refresh the auth state
-      await checkSession?.();
-
-      // UserProvider, for this case, will not refresh the router
-      // After refresh, GuestGuard will handle the redirect
-      router.refresh();
     },
-    [checkSession, router, setError]
+    [router, setUser, setError]
   );
-
+  
   return (
     <Stack spacing={4}>
       <Stack spacing={1}>
@@ -157,7 +162,7 @@ export function SignInForm(): React.JSX.Element {
         </Stack>
       </form>
       <Alert color="warning">
-        使用测试账户{' '}
+        使用已注册账户{' '}
         <Typography component="span" sx={{ fontWeight: 700 }} variant="inherit">
           zhengxin@test.com
         </Typography>{' '}
@@ -165,6 +170,8 @@ export function SignInForm(): React.JSX.Element {
         <Typography component="span" sx={{ fontWeight: 700 }} variant="inherit">
           zhengxin
         </Typography>
+        进行登录，            
+        或前往注册页面创建新账户进行测试
       </Alert>
     </Stack>
   );

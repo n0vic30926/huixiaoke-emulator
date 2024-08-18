@@ -51,10 +51,13 @@ import { useUser } from '@/hooks/use-user';
 const schema = zod.object({
   firstName: zod.string().min(1, { message: 'First name is required' }),
   lastName: zod.string().min(1, { message: 'Last name is required' }),
-  email: zod.string().min(1, { message: 'Email is required' }).email(),
-  password: zod.string().min(6, { message: 'Password should be at least 6 characters' }),
+  email: zod.string().min(1, { message: 'Email is required' }).email({ message: 'Invalid email address' }),
+  password: zod.string()
+    .min(6, { message: 'Password should be at least 6 characters' })
+    .max(18, { message: 'Password should be no more than 18 characters' }),
   terms: zod.boolean().refine((value) => value, 'You must accept the terms and conditions'),
 });
+
 
 type Values = zod.infer<typeof schema>;
 
@@ -74,36 +77,56 @@ export function SignUpForm(): React.JSX.Element {
     formState: { errors },
   } = useForm<Values>({ defaultValues, resolver: zodResolver(schema) });
 
+  const { setUser } = useUser();
+
   const onSubmit = React.useCallback(
     async (values: Values): Promise<void> => {
       setIsPending(true);
-
-      const { error } = await authClient.signUp(values);
-
-      if (error) {
-        setError('root', { type: 'server', message: error });
+  
+      try {
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+  
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Error registering user');
+        }
+  
+        const userData = await response.json();
+        setUser(userData.user);  // 可被忽略的error
+  
+        // Redirect to the homepage
+        router.push(paths.home);
+      } catch (error) {
+        if (error instanceof zod.ZodError) {
+          setError('root', { type: 'validation', message: error.errors.map(e => e.message).join(', ') });
+        } else if (error instanceof Error) {
+          setError('root', { type: 'server', message: error.message });
+        } else {
+          setError('root', { type: 'server', message: String(error) });
+        }
+      } finally {
         setIsPending(false);
-        return;
       }
-
-      // Refresh the auth state
-      await checkSession?.();
-
-      // UserProvider, for this case, will not refresh the router
-      // After refresh, GuestGuard will handle the redirect
-      router.refresh();
     },
-    [checkSession, router, setError]
+    [router, setError, setUser]
   );
+  
+  
 
   return (
     <Stack spacing={3}>
       <Stack spacing={1}>
-        <Typography variant="h4">Sign up</Typography>
+        <Typography variant="h4">注册</Typography>
         <Typography color="text.secondary" variant="body2">
-          Already have an account?{' '}
+          已经拥有账户？{' '}
           <Link component={RouterLink} href={paths.auth.signIn} underline="hover" variant="subtitle2">
-            Sign in
+            登录
           </Link>
         </Typography>
       </Stack>
@@ -114,7 +137,7 @@ export function SignUpForm(): React.JSX.Element {
             name="firstName"
             render={({ field }) => (
               <FormControl error={Boolean(errors.firstName)}>
-                <InputLabel>First name</InputLabel>
+                <InputLabel>名</InputLabel>
                 <OutlinedInput {...field} label="First name" />
                 {errors.firstName ? <FormHelperText>{errors.firstName.message}</FormHelperText> : null}
               </FormControl>
@@ -125,7 +148,7 @@ export function SignUpForm(): React.JSX.Element {
             name="lastName"
             render={({ field }) => (
               <FormControl error={Boolean(errors.firstName)}>
-                <InputLabel>Last name</InputLabel>
+                <InputLabel>姓</InputLabel>
                 <OutlinedInput {...field} label="Last name" />
                 {errors.firstName ? <FormHelperText>{errors.firstName.message}</FormHelperText> : null}
               </FormControl>
@@ -136,7 +159,7 @@ export function SignUpForm(): React.JSX.Element {
             name="email"
             render={({ field }) => (
               <FormControl error={Boolean(errors.email)}>
-                <InputLabel>Email address</InputLabel>
+                <InputLabel>邮箱地址</InputLabel>
                 <OutlinedInput {...field} label="Email address" type="email" />
                 {errors.email ? <FormHelperText>{errors.email.message}</FormHelperText> : null}
               </FormControl>
@@ -147,7 +170,7 @@ export function SignUpForm(): React.JSX.Element {
             name="password"
             render={({ field }) => (
               <FormControl error={Boolean(errors.password)}>
-                <InputLabel>Password</InputLabel>
+                <InputLabel>密码</InputLabel>
                 <OutlinedInput {...field} label="Password" type="password" />
                 {errors.password ? <FormHelperText>{errors.password.message}</FormHelperText> : null}
               </FormControl>
@@ -162,7 +185,7 @@ export function SignUpForm(): React.JSX.Element {
                   control={<Checkbox {...field} />}
                   label={
                     <React.Fragment>
-                      I have read the <Link>terms and conditions</Link>
+                      我已经阅读并同意<Link>条款和声明</Link>
                     </React.Fragment>
                   }
                 />
@@ -172,11 +195,10 @@ export function SignUpForm(): React.JSX.Element {
           />
           {errors.root ? <Alert color="error">{errors.root.message}</Alert> : null}
           <Button disabled={isPending} type="submit" variant="contained">
-            Sign up
+            注册
           </Button>
         </Stack>
       </form>
-      <Alert color="warning">Created users are not persisted</Alert>
     </Stack>
   );
 }

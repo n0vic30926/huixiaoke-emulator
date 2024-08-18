@@ -34,8 +34,7 @@ export interface UserPopoverProps {
 }
 
 export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): React.JSX.Element {
-  const { checkSession } = useUser();
-
+  const { user, checkSession } = useUser();  // 从useUser中获取user信息
   const router = useRouter();
 
   const handleSignOut = React.useCallback(async (): Promise<void> => {
@@ -47,11 +46,11 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
         return;
       }
 
-      // Refresh the auth state
+      // 刷新认证状态
       await checkSession?.();
-      // UserProvider, for this case, will not refresh the router and we need to do it manually
+      // 手动刷新路由
       router.refresh();
-      // After refresh, AuthGuard will handle the redirect
+      // 重定向由 AuthGuard 处理
     } catch (err) {
       logger.error('Sign out error', err);
     }
@@ -66,10 +65,10 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
       open={open}
       slotProps={{ paper: { sx: { width: '240px' } } }}
     >
-      <Box sx={{ p: '16px 20px ' }}> 
-        <Typography variant="subtitle1">Zhengxin</Typography>
+      <Box sx={{ p: '16px 20px ' }}>
+        <Typography variant="subtitle1">{user ? `${user.lastName}${user.firstName}` : 'Guest'}</Typography>
         <Typography color="text.secondary" variant="body2">
-          zhengxin@test.com
+          {user ? user.email : ''}
         </Typography>
       </Box>
       <Divider />
