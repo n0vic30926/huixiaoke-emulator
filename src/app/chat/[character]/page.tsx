@@ -60,12 +60,20 @@ export default function Page(): React.JSX.Element {
       setLoading(true);
 
       // 添加一个假的对方消息（显示头像和加载中动画）
-      // 先定义一个类型，该类型扩展了现有的消息类型，增加了 loading 字段
+      // 定义 MessageType 类型
+      interface MessageType {
+        text: string;
+        sender: 'user' | 'character'; // 确保 sender 只能是 'user' 或 'character'
+        id: number;
+      }
+
+      // 定义扩展类型以支持 loading 字段
       interface LoadingMessage extends Omit<MessageType, 'sender'> {
         sender: 'character'; // 强制 sender 类型为 'character'
         loading: boolean;
       }
 
+      // 示例代码
       const loadingMessage: LoadingMessage = { text: '', sender: 'character', id: Date.now() + 1, loading: true };
 
       // 更新消息状态时将其类型限定为 'user' | 'character'
