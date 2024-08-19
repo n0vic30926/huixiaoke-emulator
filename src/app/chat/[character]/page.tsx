@@ -50,7 +50,8 @@ export default function Page(): React.JSX.Element {
   const handleSend = async () => {
     if (message.trim() !== '') {
       // 将用户的消息添加到对话记录中
-      const userMessage = { text: message, sender: 'user', id: Date.now() };
+      // 确保 sender 的类型为 "user" | "character"
+      const userMessage = { text: message, sender: 'user' as const, id: Date.now() };
       const newMessages = [...messages, userMessage];
       setMessages(newMessages);
       setMessage(''); // 清空输入框
