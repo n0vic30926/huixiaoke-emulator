@@ -65,10 +65,27 @@ export function SideNav(): React.JSX.Element {
         '&::-webkit-scrollbar': { display: 'none' },
       }}
     >
-      <Stack spacing={2} sx={{ p: 3 }}>
-        <Box component={RouterLink} href={paths.home} sx={{ display: 'inline-flex' }}>
-          <Logo color="light" height={32} width={122} />
-        </Box>
+    >
+        <Stack spacing={2} sx={{ p: 3 }}>
+          <Box
+            component={RouterLink}
+            href={paths.home}
+            sx={{ 
+              display: 'inline-flex',
+              textDecoration: 'none', // 移除下划线
+              '&:hover': {
+                textDecoration: 'none', // 确保悬停时没有下划线
+              },
+              '&:focus': {
+                textDecoration: 'none', // 确保获得焦点时没有下划线
+              },
+              '&:active': {
+                textDecoration: 'none', // 确保点击时没有下划线
+              },
+            }}
+          >
+            <Logo color="light" height={32} width={122} />
+          </Box>
           <Button
             component={RouterLink}
             href={paths.createCharacter}  // 使用路径常量定义新建角色页面的URL

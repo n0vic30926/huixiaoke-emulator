@@ -26,32 +26,60 @@ export default function Page(): React.JSX.Element {
           热门角色
         </Typography>
       </Grid>
-      <Grid lg={6} sm={12} xs={12} display="flex" justifyContent="center">
+      <Grid xs={12} sm={6} display="flex" justifyContent="center">
         <InfoCard 
-          sx={{ height: '100%', maxWidth: '500px' }} 
+          sx={{
+            height: { xs: 'auto', sm: 'auto' },
+            maxWidth: { xs: '100%', sm: '500px' },
+            width: '100%',
+            padding: { xs: '8px', sm: '16px' }, // 调整卡片的内边距
+            '& img': {
+              width: { xs: '80px', sm: '100px' }, // 缩小图片尺寸
+              height: { xs: '80px', sm: '100px' },
+            },
+            '& .MuiTypography-h5': {
+              fontSize: { xs: '1rem', sm: '1.25rem' }, // 缩小标题字体
+            },
+            '& .MuiTypography-body2': {
+              fontSize: { xs: '0.875rem', sm: '1rem' }, // 缩小描述字体
+            }
+          }} 
           image="/assets/月老.png" 
           title="月老" 
           description="月老，别名柴道煌，民间又称月下老人、月下老儿，是汉族民间传说中主管婚姻的红喜神"
           tags={['传统文化', '情感']} 
           creator="慧小可" 
-          creatorAvatar="/assets/avatar-1.png"
+          creatorAvatar="/assets/zhengjian.png"
           link = {paths.yuelao}
         />
       </Grid>
-      <Grid lg={6} sm={12} xs={12} display="flex" justifyContent="center">
+      <Grid xs={12} sm={6} display="flex" justifyContent="center">
         <InfoCard 
-          sx={{ height: '100%', maxWidth: '500px' }} 
+          sx={{
+            height: { xs: 'auto', sm: 'auto' },
+            maxWidth: { xs: '100%', sm: '500px' },
+            width: '100%',
+            padding: { xs: '8px', sm: '16px' }, // 调整卡片的内边距
+            '& img': {
+              width: { xs: '80px', sm: '100px' }, // 缩小图片尺寸
+              height: { xs: '80px', sm: '100px' },
+            },
+            '& .MuiTypography-h5': {
+              fontSize: { xs: '1rem', sm: '1.25rem' }, // 缩小标题字体
+            },
+            '& .MuiTypography-body2': {
+              fontSize: { xs: '0.875rem', sm: '1rem' }, // 缩小描述字体
+            }
+          }} 
           image="/assets/红娘.png" 
           title="红娘" 
           description="红娘的形象在文学作品中经历了从模糊到具体的发展过程，‌从《‌莺莺传》‌中的次要角色，‌到《‌西厢记》‌中的..."
           tags={['传统文化', '情感']} 
           creator="慧小可" 
-          creatorAvatar="/assets/avatar-1.png" 
+          creatorAvatar="/assets/zhengjian.png" 
           link = {paths.hongniang}
         />
       </Grid>
     </Grid>
   );
 }
-
-

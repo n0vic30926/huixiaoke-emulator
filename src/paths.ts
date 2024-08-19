@@ -27,7 +27,8 @@ export const paths = {
   },
   yuelao: 'chat/yuelao',
   hongniang: 'chat/hongniang',
-  createCharacter: '/create-character',
+  // createCharacter: '/create-character',
+  createCharacter: '/dashboard',
   myCharacters: '/my-characters',
   errors: { notFound: '/errors/not-found' },
 } as const;

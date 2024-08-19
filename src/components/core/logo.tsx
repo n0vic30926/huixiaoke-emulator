@@ -7,9 +7,11 @@
 'use client';
 
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import { useColorScheme } from '@mui/material/styles';
 import { NoSsr } from '@/components/core/no-ssr';
+import { Box, Typography } from '@mui/material'; // 确保导入 Typography 组件
+import { useTheme } from '@mui/material/styles';
+
 
 const HEIGHT = 60;
 const WIDTH = 60;
@@ -22,25 +24,48 @@ export interface LogoProps {
   height?: number;
   width?: number;
 }
-
-export function Logo({ color = 'dark', emblem, height = HEIGHT, width = WIDTH }: LogoProps): React.JSX.Element {
+export function Logo({ color = 'light', emblem, height = HEIGHT, width = WIDTH }: LogoProps): React.JSX.Element {
   let url: string;
 
   if (emblem) {
-    url = color === 'light' ? '/assets/logo-emblem.svg' : '/assets/logo-emblem--dark.svg';
+    url = color === 'light' ? '/assets/zhengjian.png' : '/assets/zhengjian.png';
   } else {
-    url = color === 'light' ? '/assets/logo.svg' : '/assets/logo--dark.svg';
+    url = color === 'light' ? '/assets/zhengjian.png' : '/assets/zhengjian.png';
   }
 
-  return <Box alt="logo" component="img" height={height} src={url} width={width} />;
-}
+  // 设置字体颜色，基于传入的 color 参数
+  const textColor = color === 'light' ? 'black' : 'white';
 
-export interface DynamicLogoProps {
-  colorDark?: Color;
-  colorLight?: Color;
-  emblem?: boolean;
-  height?: number;
-  width?: number;
+  return (
+    <Box display="flex" alignItems="center">
+      <Box
+        alt="logo"
+        component="img"
+        height={height}
+        width={width}
+        src={url}
+        sx={{
+          objectFit: 'contain',
+          display: 'block',
+          maxHeight: '100%',
+          maxWidth: '100%',
+          mr: -4, // 图标和标题之间的间距
+          position: 'relative', // 使用定位进行调整
+          left: '-30px', // 向左移动图标
+        }}
+      />
+      <Typography 
+        variant="h6" 
+        component="div"
+        sx={{ 
+          fontWeight: 'bold', 
+          color: textColor, // 明确设置字体颜色
+        }}
+      >
+        慧小可模拟器
+      </Typography>
+    </Box>
+  );
 }
 
 export function DynamicLogo({

@@ -60,6 +60,7 @@ import { Logo } from '@/components/core/logo';
 import { navItems } from './config';
 import { navIcons } from './nav-icons';
 
+
 // 首页左上角和左下角 Logo，workspace和导航栏，移动端
 
 export interface MobileNavProps {
@@ -99,11 +100,27 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
       onClose={onClose}
       open={open}
     >
-      <Stack spacing={2} sx={{ p: 3 }}>
-        <Box component={RouterLink} href={paths.home} sx={{ display: 'inline-flex' }}>
-          <Logo color="light" height={32} width={122} />
-        </Box>
-        <Box
+    <Stack spacing={2} sx={{ p: 3 }}>
+      <Box
+        component={RouterLink}
+        href={paths.home}
+        sx={{ 
+          display: 'inline-flex',
+          textDecoration: 'none', // 移除下划线
+          '&:hover': {
+            textDecoration: 'none', // 确保悬停时没有下划线
+          },
+          '&:focus': {
+            textDecoration: 'none', // 确保获得焦点时没有下划线
+          },
+          '&:active': {
+            textDecoration: 'none', // 确保点击时没有下划线
+          },
+        }}
+      >
+        <Logo color="dark" height={32} width={122} />
+      </Box>
+        {/* <Box
           sx={{
             alignItems: 'center',
             backgroundColor: 'var(--mui-palette-neutral-950)',
@@ -123,7 +140,7 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
             </Typography>
           </Box>
           <CaretUpDownIcon />
-        </Box>
+        </Box> */}
       </Stack>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
       <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>
