@@ -27,7 +27,7 @@ const characterData = {
 
 export default function Page(): React.JSX.Element {
   const [message, setMessage] = React.useState('');
-  const [messages, setMessages] = React.useState<{ text: string; sender: 'user' | 'character'; id: number }[]>([]); 
+  const [messages, setMessages] = React.useState<{ text: string; sender: 'user' | 'character'; id: number; loading: boolean }[]>([]); 
   const pathname = usePathname();
   const router = useRouter();
   const character = pathname?.split('/').pop() || ''; // 先检查 pathname 是否为 null，然后提供默认值
@@ -51,7 +51,7 @@ export default function Page(): React.JSX.Element {
     if (message.trim() !== '') {
       // 将用户的消息添加到对话记录中
       // 确保 sender 的类型为 "user" | "character"
-      const userMessage = { text: message, sender: 'user' as const, id: Date.now() };
+      const userMessage = { text: message, sender: 'user' as const, id: Date.now(), loading: false };
       const newMessages = [...messages, userMessage];
       setMessages(newMessages);
       setMessage(''); // 清空输入框
@@ -98,7 +98,7 @@ export default function Page(): React.JSX.Element {
       setLoading(false); // 停止加载动画
 
       if (data.code === 1) {
-        const characterMessage = { text: data.replies, sender: 'character', id: Date.now() + 1 };
+        const characterMessage = { text: data.replies, sender: 'character', id: Date.now() + 1,loading: false };
         const updatedMessages = [...newMessages, characterMessage];
         setMessages((prevMessages) => {
           return prevMessages.map((msg) => 
