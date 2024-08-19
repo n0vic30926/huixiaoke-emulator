@@ -65,7 +65,7 @@ export function InfoCard({
         <Stack direction="row" spacing={1} sx={{ mt: 2, alignItems: 'center' }}>
           <Avatar src={creatorAvatar} alt={creator} />
           <Typography variant="body2" color="text.secondary">
-            Create by {creator}
+            Created by {creator}
           </Typography>
         </Stack>
       </CardContent>
