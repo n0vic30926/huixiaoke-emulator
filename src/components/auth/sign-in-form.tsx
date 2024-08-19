@@ -50,6 +50,8 @@ export function SignInForm(): React.JSX.Element {
   const router = useRouter();
   const { setUser } = useUser();  // 获取setUser方法
 
+
+
   const [showPassword, setShowPassword] = React.useState<boolean>();
 
   const [isPending, setIsPending] = React.useState<boolean>(false);
@@ -78,10 +80,18 @@ export function SignInForm(): React.JSX.Element {
           const errorData = await response.json();
           throw new Error(errorData.message || 'Error logging in');
         }
-  
-        const userData = await response.json();
-        setUser(userData.user);  // 可以忽略的错误
-  
+
+        try {
+          const userData = await response.json();
+        
+          if (setUser) {
+            setUser(userData.user as UserType);  // 传入符合 UserType 的对象
+          } else {
+            //
+          }
+        } catch {
+          // 你可以在这里进行额外的错误处理，例如显示错误消息或采取其他操作
+        }
         router.push(paths.home);  // Redirect to the homepage
       } catch (error) {
         setError('root', { type: 'server', message: (error as Error).message });
