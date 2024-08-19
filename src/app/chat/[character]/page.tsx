@@ -65,13 +65,12 @@ export default function Page(): React.JSX.Element {
         text: string;
         sender: 'user' | 'character'; // 确保 sender 只能是 'user' 或 'character'
         id: number;
-        
+        loading: boolean; // 可选的 loading 属性
       }
 
       // 定义扩展类型以支持 loading 字段
       interface LoadingMessage extends Omit<MessageType, 'sender'> {
         sender: 'character'; // 强制 sender 类型为 'character'
-        loading: boolean; // 可选的 loading 属性
       }
 
       // 示例代码
