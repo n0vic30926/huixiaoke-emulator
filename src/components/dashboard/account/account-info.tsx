@@ -39,9 +39,6 @@ export function AccountInfo(): React.JSX.Element {
             <Typography color="text.secondary" variant="body2">
              {user.country} {user.city} 
             </Typography>
-            <Typography color="text.secondary" variant="body2">
-              {user.timezone}
-            </Typography>
           </Stack>
         </Stack>
       </CardContent>
