@@ -30,7 +30,7 @@ export default function Page(): React.JSX.Element {
   const [messages, setMessages] = React.useState<{ text: string; sender: 'user' | 'character'; id: number }[]>([]); 
   const pathname = usePathname();
   const router = useRouter();
-  const character = pathname.split('/').pop(); // 从路径中获取角色名称
+  const character = pathname?.split('/').pop() || ''; // 先检查 pathname 是否为 null，然后提供默认值
 
   const currentCharacter = characterData[character as keyof typeof characterData];
   const [loading, setLoading] = React.useState(false);
