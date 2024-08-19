@@ -85,7 +85,7 @@ export function SignInForm(): React.JSX.Element {
           const userData = await response.json();
         
           if (setUser) {
-            setUser(userData.user as UserType);  // 传入符合 UserType 的对象
+            setUser(userData.user);  // 传入符合 UserType 的对象
           } else {
             //
           }
