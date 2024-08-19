@@ -97,9 +97,19 @@ export function SignUpForm(): React.JSX.Element {
           throw new Error(errorData.message || 'Error registering user');
         }
   
-        const userData = await response.json();
-        setUser(userData.user);  // 可被忽略的error
-  
+        try {
+          const userData = await response.json();
+        
+          if (setUser) {
+            setUser(userData.user);  // 传入符合 UserType 的对象
+          } else {
+            //
+          }
+        } catch {
+          // 你可以在这里进行额外的错误处理，例如显示错误消息或采取其他操作
+        }
+
+
         // Redirect to the homepage
         router.push(paths.home);
       } catch (error) {
