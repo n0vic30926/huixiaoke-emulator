@@ -39,7 +39,8 @@
  */
 
 'use client';
-
+import Link from 'next/link';
+import Avatar from '@mui/material/Avatar';
 import * as React from 'react';
 import RouterLink from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -68,108 +69,6 @@ export interface MobileNavProps {
   open?: boolean;
   items?: NavItemConfig[];
 }
-
-export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element {
-  const pathname = usePathname();
-
-  return (
-    <Drawer
-      PaperProps={{
-        sx: {
-          '--MobileNav-background': 'var(--mui-palette-neutral-950)',
-          '--MobileNav-color': 'var(--mui-palette-common-white)',
-          '--NavItem-color': 'var(--mui-palette-neutral-300)',
-          '--NavItem-hover-background': 'rgba(255, 255, 255, 0.04)',
-          '--NavItem-active-background': 'var(--mui-palette-primary-main)',
-          '--NavItem-active-color': 'var(--mui-palette-primary-contrastText)',
-          '--NavItem-disabled-color': 'var(--mui-palette-neutral-500)',
-          '--NavItem-icon-color': 'var(--mui-palette-neutral-400)',
-          '--NavItem-icon-active-color': 'var(--mui-palette-primary-contrastText)',
-          '--NavItem-icon-disabled-color': 'var(--mui-palette-neutral-600)',
-          bgcolor: 'var(--MobileNav-background)',
-          color: 'var(--MobileNav-color)',
-          display: 'flex',
-          flexDirection: 'column',
-          maxWidth: '100%',
-          scrollbarWidth: 'none',
-          width: 'var(--MobileNav-width)',
-          zIndex: 'var(--MobileNav-zIndex)',
-          '&::-webkit-scrollbar': { display: 'none' },
-        },
-      }}
-      onClose={onClose}
-      open={open}
-    >
-    <Stack spacing={2} sx={{ p: 3 }}>
-      <Box
-        component={RouterLink}
-        href={paths.home}
-        sx={{ 
-          display: 'inline-flex',
-          textDecoration: 'none', // 移除下划线
-          '&:hover': {
-            textDecoration: 'none', // 确保悬停时没有下划线
-          },
-          '&:focus': {
-            textDecoration: 'none', // 确保获得焦点时没有下划线
-          },
-          '&:active': {
-            textDecoration: 'none', // 确保点击时没有下划线
-          },
-        }}
-      >
-        <Logo color="dark" height={32} width={122} />
-      </Box>
-        {/* <Box
-          sx={{
-            alignItems: 'center',
-            backgroundColor: 'var(--mui-palette-neutral-950)',
-            border: '1px solid var(--mui-palette-neutral-700)',
-            borderRadius: '12px',
-            cursor: 'pointer',
-            display: 'flex',
-            p: '4px 12px',
-          }}
-        >
-          <Box sx={{ flex: '1 1 auto' }}>
-            <Typography color="var(--mui-palette-neutral-400)" variant="body2">
-              Workspace
-            </Typography>
-            <Typography color="inherit" variant="subtitle1">
-              Devias
-            </Typography>
-          </Box>
-          <CaretUpDownIcon />
-        </Box> */}
-      </Stack>
-      <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
-      <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>
-        {renderNavItems({ pathname: pathname || '',items: navItems })}
-      </Box>
-      <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
-      <Stack spacing={2} sx={{ p: '12px' }}>
-        <div>
-          <Typography color="var(--mui-palette-neutral-100)" variant="subtitle2">
-          最近聊天
-          </Typography>
-          <Typography color="var(--mui-palette-neutral-400)" variant="body2">
-            Check out our Pro solution template.
-          </Typography>
-        </div>
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Box
-            component="img"
-            alt="Pro version"
-            src="/assets/devias-kit-pro.png"
-            sx={{ height: 'auto', width: '160px' }}
-          />
-        </Box>
-
-      </Stack>
-    </Drawer>
-  );
-}
-
 function renderNavItems({ items = [], pathname }: { items?: NavItemConfig[]; pathname: string }): React.JSX.Element {
   const children = items.reduce((acc: React.ReactNode[], curr: NavItemConfig): React.ReactNode[] => {
     const { key, ...item } = curr;
@@ -185,7 +84,6 @@ function renderNavItems({ items = [], pathname }: { items?: NavItemConfig[]; pat
     </Stack>
   );
 }
-
 interface NavItemProps extends Omit<NavItemConfig, 'items'> {
   pathname: string;
 }
@@ -244,5 +142,118 @@ function NavItem({ disabled, external, href, icon, matcher, pathname, title }: N
         </Box>
       </Box>
     </li>
+  );
+}
+
+export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element {
+  const pathname = usePathname();
+
+  return (
+    <Drawer
+      PaperProps={{
+        sx: {
+          '--MobileNav-background': 'var(--mui-palette-neutral-950)',
+          '--MobileNav-color': 'var(--mui-palette-common-white)',
+          '--NavItem-color': 'var(--mui-palette-neutral-300)',
+          '--NavItem-hover-background': 'rgba(255, 255, 255, 0.04)',
+          '--NavItem-active-background': 'var(--mui-palette-primary-main)',
+          '--NavItem-active-color': 'var(--mui-palette-primary-contrastText)',
+          '--NavItem-disabled-color': 'var(--mui-palette-neutral-500)',
+          '--NavItem-icon-color': 'var(--mui-palette-neutral-400)',
+          '--NavItem-icon-active-color': 'var(--mui-palette-primary-contrastText)',
+          '--NavItem-icon-disabled-color': 'var(--mui-palette-neutral-600)',
+          bgcolor: 'var(--MobileNav-background)',
+          color: 'var(--MobileNav-color)',
+          display: 'flex',
+          flexDirection: 'column',
+          maxWidth: '100%',
+          scrollbarWidth: 'none',
+          width: 'var(--MobileNav-width)',
+          zIndex: 'var(--MobileNav-zIndex)',
+          '&::-webkit-scrollbar': { display: 'none' },
+        },
+      }}
+      onClose={onClose}
+      open={open}
+    >
+      <Stack spacing={2} sx={{ p: 3 }}>
+        <Box
+          component={RouterLink}
+          href={paths.home}
+          sx={{ 
+            display: 'inline-flex',
+            textDecoration: 'none',
+            '&:hover': { textDecoration: 'none' },
+            '&:focus': { textDecoration: 'none' },
+            '&:active': { textDecoration: 'none' },
+          }}
+        >
+          <Logo color="dark" height={32} width={122} />
+        </Box>
+      </Stack>
+      <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
+      <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>
+        {renderNavItems({ pathname: pathname || '', items: navItems })}
+      </Box>
+      <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
+      <Stack spacing={2} sx={{ p: '12px' }}>
+        <Typography color="text.primary" variant="subtitle2" sx={{ fontWeight: 'bold', fontSize: '1.25rem' }}>
+          最近聊天
+        </Typography>
+        
+        <Link href="/chat/yuelao" passHref>
+          <Box sx={{ display: 'inline-flex' }}>
+            <ChatItem 
+              image="/assets/月老.png" 
+              name="月老" 
+              description="生命中遇到的人总能教会你些什么" 
+              href = "/chat/yuelao"
+            />
+          </Box>
+        </Link>
+        <Link href="/chat/hongniang" passHref>
+          <Box sx={{ display: 'inline-flex' }}>
+            <ChatItem 
+              image="/assets/红娘.png" 
+              name="红娘" 
+              description="红娘的形象在文学作品中经历了从模糊到具体的发展过程" 
+              href = "/chat/hongniang"
+            />
+          </Box>
+        </Link>
+      </Stack>
+    </Drawer>
+  );
+}
+
+// 同步PC端的ChatItem组件
+function ChatItem({ image, name, description, href }: { image: string; name: string; description: string; href: string }) {
+  return (
+    <Box
+      component={RouterLink}
+      href={href}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        textDecoration: 'none',
+        mb: 2,
+        p: 1,
+        borderRadius: 1,
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        '&:hover': {
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        },
+      }}
+    >
+      <Avatar src={image} sx={{ width: 48, height: 48, mr: 2 }} />
+      <Box>
+      <Typography variant="body1" color="text.primary" sx={{ fontWeight: 'bold' }}>
+        {name}
+      </Typography>
+        <Typography variant="body2" color="#B0B0B0">
+          {description}
+        </Typography>
+      </Box>
+    </Box>
   );
 }
