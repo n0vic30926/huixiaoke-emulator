@@ -18,6 +18,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import { SxProps } from '@mui/material/styles';
 
 export interface InfoCardProps {
@@ -59,24 +60,26 @@ export function InfoCard({
         </Typography>
         <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
           {tags.map((tag) => (
-            <Chip key={tag} label={tag} variant="outlined" /> // 使用Chip组件代替Button，成为不可点击的标签
+            <Chip key={tag} label={tag} variant="outlined" />
           ))}
         </Stack>
-        <Stack direction="row" spacing={1} sx={{ mt: 2, alignItems: 'center' }}>
-          <Avatar src={creatorAvatar} alt={creator} />
-          <Typography variant="body2" color="text.secondary">
-            Created by {creator}
-          </Typography>
-        </Stack>
+        {/* 文字与开始聊天水平对齐 */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 3 }}>
+          <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+            <Avatar src={creatorAvatar} alt={creator} />
+            <Typography variant="body2" color="text.secondary">
+              Created by {creator}
+            </Typography>
+          </Stack>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            href={link} 
+          >
+            开始聊天
+          </Button>
+        </Box>
       </CardContent>
-      <Button 
-        variant="contained" 
-        color="primary" 
-        sx={{ position: 'absolute', bottom: 30, right: 40 }} 
-        href  =  {link} // 替换为实际的聊天页面URL
-      >
-        开始聊天
-      </Button>
     </Card>
   );
 }
