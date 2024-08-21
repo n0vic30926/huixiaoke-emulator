@@ -25,8 +25,14 @@ export const paths = {
     integrations: '/dashboard/integrations',
     settings: '/dashboard/settings',
   },
-  yuelao: 'chat/yuelao',
-  hongniang: 'chat/hongniang',
+  chat: {
+    yuelao: '/chat/yuelao',
+    hongniang: '/chat/hongniang',
+  },
+  story: {
+    yuelao: (scene: string) => `/chat/yuelao/${scene}`,  // 剧情模式路径
+    hongniang: (scene: string) => `/chat/hongniang/${scene}`,  // 剧情模式路径
+  },
   // createCharacter: '/create-character',
   createCharacter: '/dashboard',
   myCharacters: '/my-characters',

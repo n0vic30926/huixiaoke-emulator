@@ -19,6 +19,9 @@ import { paths } from '@/paths';
 export const metadata = { title: `Overview | Dashboard | ${config.site.name}` } satisfies Metadata;
 
 export default function Page(): React.JSX.Element {
+  const yuelaoSceneLink = paths.story.yuelao('scene1');  // 计算路径
+  const hongniangSceneLink = paths.story.hongniang('scene1');  // 计算路径
+
   return (
     <Grid container spacing={2}>
       <Grid xs={12} sx={{ mb: 2 }}>
@@ -32,16 +35,16 @@ export default function Page(): React.JSX.Element {
             height: { xs: 'auto', sm: 'auto' },
             maxWidth: { xs: '100%', sm: '500px' },
             width: '100%',
-            padding: { xs: '8px', sm: '16px' }, // 调整卡片的内边距
+            padding: { xs: '8px', sm: '16px' },
             '& img': {
-              width: { xs: '80px', sm: '100px' }, // 缩小图片尺寸
+              width: { xs: '80px', sm: '100px' },
               height: { xs: '80px', sm: '100px' },
             },
             '& .MuiTypography-h5': {
-              fontSize: { xs: '1rem', sm: '1.25rem' }, // 缩小标题字体
+              fontSize: { xs: '1rem', sm: '1.25rem' },
             },
             '& .MuiTypography-body2': {
-              fontSize: { xs: '0.875rem', sm: '1rem' }, // 缩小描述字体
+              fontSize: { xs: '0.875rem', sm: '1rem' },
             }
           }} 
           image="/assets/月老.png" 
@@ -50,7 +53,8 @@ export default function Page(): React.JSX.Element {
           tags={['传统文化', '情感']} 
           creator="慧小可" 
           creatorAvatar="/assets/zhengjian.png"
-          link = {paths.yuelao}
+          link={paths.chat.yuelao}  // 聊天页面路径
+          sceneLink={yuelaoSceneLink}  // 剧情模式路径
         />
       </Grid>
       <Grid xs={12} sm={6} display="flex" justifyContent="center">
@@ -59,16 +63,16 @@ export default function Page(): React.JSX.Element {
             height: { xs: 'auto', sm: 'auto' },
             maxWidth: { xs: '100%', sm: '500px' },
             width: '100%',
-            padding: { xs: '8px', sm: '16px' }, // 调整卡片的内边距
+            padding: { xs: '8px', sm: '16px' },
             '& img': {
-              width: { xs: '80px', sm: '100px' }, // 缩小图片尺寸
+              width: { xs: '80px', sm: '100px' },
               height: { xs: '80px', sm: '100px' },
             },
             '& .MuiTypography-h5': {
-              fontSize: { xs: '1rem', sm: '1.25rem' }, // 缩小标题字体
+              fontSize: { xs: '1rem', sm: '1.25rem' },
             },
             '& .MuiTypography-body2': {
-              fontSize: { xs: '0.875rem', sm: '1rem' }, // 缩小描述字体
+              fontSize: { xs: '0.875rem', sm: '1rem' },
             }
           }} 
           image="/assets/红娘.png" 
@@ -76,8 +80,9 @@ export default function Page(): React.JSX.Element {
           description="红娘的形象在文学作品中经历了从模糊到具体的发展过程，‌从《‌莺莺传》‌中的次要角色，‌到《‌西厢记》‌中的..."
           tags={['传统文化', '情感']} 
           creator="慧小可" 
-          creatorAvatar="/assets/zhengjian.png" 
-          link = {paths.hongniang}
+          creatorAvatar="/assets/zhengjian.png"
+          link={paths.chat.hongniang}  // 聊天页面路径
+          sceneLink={hongniangSceneLink}  // 剧情模式路径
         />
       </Grid>
     </Grid>
