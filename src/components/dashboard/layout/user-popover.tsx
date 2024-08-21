@@ -48,9 +48,12 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
 
       // 刷新认证状态
       await checkSession?.();
+
       // 手动刷新路由
       router.refresh();
-      // 重定向由 AuthGuard 处理
+
+      // 跳转到登录页面
+      router.push(paths.auth.signIn); 
     } catch (err) {
       logger.error('Sign out error', err);
     }

@@ -50,7 +50,7 @@ export function Layout({ children }: LayoutProps): React.JSX.Element {
               </Box>
             </Typography>
             <Typography align="center" variant="subtitle1">
-              一句简单的介绍文本
+              你的情感陪伴伙伴
             </Typography>
           </Stack>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
