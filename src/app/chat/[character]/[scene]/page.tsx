@@ -601,7 +601,7 @@ const handleClearChat = () => {
           variant="contained" 
           color="primary" 
           onClick={handleSend} 
-          disabled={progress <= 0 || attemptsLeft <= 0} // 当进度条或剩余次数小于等于0时禁用发送按钮
+          disabled={progress <= 0 || attemptsLeft <= 0 || progress >= 100} // 当进度条或剩余次数小于等于0时，或进度条大于100时禁用发送按钮
           sx={{ 
             padding: '4px 8px',
             minWidth: { xs: 50, sm: 80 }, 
