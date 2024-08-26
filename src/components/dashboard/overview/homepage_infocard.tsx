@@ -65,7 +65,7 @@ export function InfoCard({
   const handleSelect = (scene: string) => {
     // 使用 sceneLink 作为基础路径
     router.push(`${sceneLink}`);
-    handleClose(); // 关闭下拉菜单
+    // handleClose(); // 关闭下拉菜单
   };
 
   return (
@@ -100,25 +100,11 @@ export function InfoCard({
             <Button 
               variant="contained" 
               color="warning" // 设置剧情模式按钮为橙色
-              onClick={handleClick}
-              endIcon={<ExpandMoreIcon />}
+              onClick={handleSelect}
               sx={{ paddingX: '14px', marginLeft: '14px' }}
             >
               剧情模式
             </Button>
-            <Menu
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                'aria-labelledby': 'scenario-button',
-              }}
-              sx={{ minWidth: 'inherit', width: '100%' }}
-            >
-              <MenuItem onClick={() => handleSelect('scene1')}>剧情1</MenuItem>
-              <MenuItem onClick={() => handleSelect('scene2')}>剧情2</MenuItem>
-              <MenuItem onClick={() => handleSelect('scene3')}>剧情3</MenuItem>
-            </Menu>
             <Button 
               variant="contained" 
               color="primary" 
