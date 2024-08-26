@@ -50,11 +50,11 @@ export default function StoryPage(): React.JSX.Element {
   const [openDialog, setOpenDialog] = React.useState(false);
   const [dialogContent, setDialogContent] = React.useState('');
   // 在组件内创建一个 ref，用于引用聊天记录的底部
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null); // 指定为 HTMLDivElement 类型
 
   // 每当 messages 更新时，自动滚动到最底部
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    (messagesEndRef.current as HTMLDivElement)?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   // // 捕获软键盘弹出行为
   // useEffect(() => {
