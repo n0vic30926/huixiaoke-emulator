@@ -36,7 +36,7 @@ export default function Page(): React.JSX.Element {
   const currentCharacter = characterData[character as keyof typeof characterData];
   const [loading, setLoading] = React.useState(false);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null); // 指定为 HTMLDivElement 类型
+  const messagesEndRef = useRef<HTMLDivElement | null>(null); // 指定为 HTMLDivElement 类型
 
   // 每当 messages 更新时，自动滚动到最底部
   useEffect(() => {
