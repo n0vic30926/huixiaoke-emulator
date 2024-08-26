@@ -1,13 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 
-
 interface LayoutProps {
   children: React.ReactNode;
-  progress: number;
 }
 
-export default function Layout({ children, progress }: LayoutProps): React.JSX.Element {
+export default function Layout({ children }: LayoutProps): React.JSX.Element {
   return (
     <Box
       sx={{
@@ -17,9 +15,7 @@ export default function Layout({ children, progress }: LayoutProps): React.JSX.E
         position: 'relative',
       }}
     >
-
       <main>{children}</main>
     </Box>
   );
 }
-
