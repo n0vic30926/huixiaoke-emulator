@@ -84,7 +84,7 @@ const handleClearChat = () => {
     // 先插入加载的消息
     const loadingMessage = {
       text: '',
-      sender: 'character',
+      sender: 'character' as const, // 确保 sender 类型为 'character'
       id: Date.now(),
       loading: true,
     };
