@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete'; // 引入删除图标
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'; // 引入返回图标
+import { useEffect, useRef } from 'react';
 
 // 角色数据
 const characterData = {
@@ -34,6 +35,14 @@ export default function Page(): React.JSX.Element {
 
   const currentCharacter = characterData[character as keyof typeof characterData];
   const [loading, setLoading] = React.useState(false);
+
+  const messagesEndRef = useRef(null);
+
+  // 每当 messages 更新时，自动滚动到最底部
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
 
   React.useEffect(() => {
     // 从 localStorage 中恢复聊天记录
@@ -233,13 +242,14 @@ export default function Page(): React.JSX.Element {
             key={msg.id} 
             display="flex" 
             flexDirection={msg.sender === 'user' ? 'row-reverse' : 'row'} 
-            alignItems="center" 
+            alignItems="flex-start" 
             mb={2}
             sx={{ 
               '& .MuiAvatar-root': {
                 width: { xs: 32, sm: 32 }, // 在移动端缩小头像大小
                 height: { xs: 32, sm: 32 },
-              }
+              },
+              width: '100%', // 确保父容器占据整个宽度
             }}
           >
             <Avatar 
@@ -254,7 +264,7 @@ export default function Page(): React.JSX.Element {
                 bgcolor: msg.sender === 'user' ? '#e0e0e0' : '#f0f0f0', 
                 p: 2, 
                 borderRadius: 1, 
-                maxWidth: { xs: '70%', sm: '60%' }, // 在移动端减小对话气泡宽度
+                maxWidth: { xs: '85%', sm: '60%' }, // 在移动端减小对话气泡宽度
                 fontSize: { xs: '0.5rem', sm: '0.7rem' }, // 在移动端缩小字体大小
               }}
             >
@@ -272,6 +282,7 @@ export default function Page(): React.JSX.Element {
             </Box>
           </Box>
         ))}
+        <div ref={messagesEndRef} /> {/* 用于自动滚动到最底部的占位元素 */}
       </Box>
 
       {/* 聊天输入框和发送按钮位于底部 */}
