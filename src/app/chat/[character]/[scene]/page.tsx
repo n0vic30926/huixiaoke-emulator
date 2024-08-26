@@ -284,7 +284,16 @@ const handleClearChat = () => {
           <Box key={msg.id} display="flex" flexDirection={msg.sender === 'user' ? 'row-reverse' : 'row'} alignItems="center" mb={2}>
             <Avatar src={msg.sender === 'user' ? '/assets/用户.png' : currentCharacter.image} sx={{ ml: 2, mr: 2 }} />
             <Box sx={{ bgcolor: msg.sender === 'user' ? '#e0e0e0' : '#f0f0f0', p: 2, borderRadius: 1 }}>
-              {msg.loading ? <LoadingDots /> : <Typography>{msg.text}</Typography>}
+                {msg.loading ? (
+                  <LoadingDots />
+                ) : (
+                  <Typography
+                    component="span"
+                    dangerouslySetInnerHTML={{
+                      __html: msg.text.replace(/\n/g, '<br/>'),
+                    }}
+                  />
+                )}
             </Box>
           </Box>
         ))}
