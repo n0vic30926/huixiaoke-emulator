@@ -21,6 +21,7 @@ export const metadata = { title: `Overview | Dashboard | ${config.site.name}` } 
 export default function Page(): React.JSX.Element {
   const yuelaoSceneLink = paths.story.yuelao('scene1');  // 计算路径
   const hongniangSceneLink = paths.story.hongniang('scene1');  // 计算路径
+  const xiongerSceneLink = paths.story.xionger('scene1');  // 计算路径
 
   return (
     <Grid container spacing={2}>
@@ -83,6 +84,34 @@ export default function Page(): React.JSX.Element {
           creatorAvatar="/assets/zhengjian.png"
           link={paths.chat.hongniang}  // 聊天页面路径
           sceneLink={hongniangSceneLink}  // 剧情模式路径
+        />
+      </Grid>
+      <Grid xs={12} sm={6} display="flex" justifyContent="center">
+        <InfoCard 
+          sx={{
+            height: { xs: 'auto', sm: 'auto' },
+            maxWidth: { xs: '100%', sm: '500px' },
+            width: '100%',
+            padding: { xs: '8px', sm: '16px' },
+            '& img': {
+              width: { xs: '80px', sm: '100px' },
+              height: { xs: '80px', sm: '100px' },
+            },
+            '& .MuiTypography-h5': {
+              fontSize: { xs: '1rem', sm: '1.25rem' },
+            },
+            '& .MuiTypography-body2': {
+              fontSize: { xs: '0.875rem', sm: '1rem' },
+            }
+          }} 
+          image="/assets/熊二.jpg" 
+          title="熊二" 
+          description="光头强，你又来砍树！"
+          tags={['动漫', '幽默']} 
+          creator="慧小可" 
+          creatorAvatar="/assets/zhengjian.png"
+          link={paths.chat.xionger}  // 聊天页面路径
+          sceneLink={xiongerSceneLink}  // 剧情模式路径
         />
       </Grid>
     </Grid>

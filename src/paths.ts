@@ -28,10 +28,12 @@ export const paths = {
   chat: {
     yuelao: '/chat/yuelao',
     hongniang: '/chat/hongniang',
+    xionger:'/chat/xionger'
   },
   story: {
     yuelao: (scene: string) => `/chat/yuelao/${scene}`,  // 剧情模式路径
     hongniang: (scene: string) => `/chat/hongniang/${scene}`,  // 剧情模式路径
+    xionger:(scene: string) => `/chat/xionger/${scene}`, // 剧情模式路径
   },
   // createCharacter: '/create-character',
   createCharacter: '/dashboard',

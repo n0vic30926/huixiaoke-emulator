@@ -24,6 +24,11 @@ const characterData = {
     image: '/assets/红娘.png',
     description: '红娘的形象在文学作品中经历了从模糊到具体的发展过程。',
   },
+  xionger: {
+    name: '熊二',
+    image: '/assets/熊二.jpg',
+    description: '光头强，你又来砍树！',
+  },
 };
 
 export default function Page(): React.JSX.Element {

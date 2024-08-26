@@ -127,6 +127,17 @@ export function SideNav(): React.JSX.Element {
             />
           </Box>
         </Link>
+        <Link href="/chat/xionger" passHref>
+          <Box sx={{ display: 'inline-flex' }}>
+            <ChatItem 
+              image="/assets/熊二.jpg" 
+              name="熊二" 
+              description="光头强，你又来砍树！" 
+              href = "/chat/xionger"
+            />
+          </Box>
+        </Link>
+
 
       </Stack>
     </Box>
