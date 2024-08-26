@@ -40,8 +40,9 @@ export default function Page(): React.JSX.Element {
 
   // 每当 messages 更新时，自动滚动到最底部
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    (messagesEndRef.current as HTMLDivElement)?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+  
 
 
   React.useEffect(() => {
