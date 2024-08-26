@@ -108,7 +108,7 @@ const handleClearChat = () => {
       if (data.code === 1) {
         const openingMessage = {
           text: data.replies,
-          sender: 'character',
+          sender: 'character' as const, // 确保 sender 类型为 'character'
           id: Date.now(),
           loading: false,
         };
