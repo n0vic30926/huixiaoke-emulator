@@ -258,7 +258,17 @@ export default function Page(): React.JSX.Element {
                 fontSize: { xs: '0.5rem', sm: '0.7rem' }, // 在移动端缩小字体大小
               }}
             >
-              {msg.loading ? <LoadingDots /> : <Typography>{msg.text}</Typography>}
+            {msg.loading ? (
+                <LoadingDots />
+              ) : (
+                // 确保 Typography 内没有其他内容，只有 dangerouslySetInnerHTML 插入的内容
+                <Typography
+                  component="span"
+                  dangerouslySetInnerHTML={{
+                    __html: msg.text.replace(/\n/g, '<br/>'),
+                  }}
+                />
+              )}
             </Box>
           </Box>
         ))}

@@ -109,7 +109,7 @@ export function InfoCard({
               variant="contained" 
               color="primary" 
               href={link} 
-              sx={{ ml: 2 }} // 添加一些间距
+              sx={{ paddingX: '14px', marginLeft: '14px' }} // 添加一些间距
             >
               开始聊天
             </Button>
