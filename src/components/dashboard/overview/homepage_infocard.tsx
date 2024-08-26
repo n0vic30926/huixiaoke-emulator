@@ -55,7 +55,7 @@ export function InfoCard({
   const router = useRouter();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    handleSelect(sceneLink); // 将 sceneLink 传递给 handleSelect
   };
 
   const handleClose = () => {
@@ -100,7 +100,7 @@ export function InfoCard({
             <Button 
               variant="contained" 
               color="warning" // 设置剧情模式按钮为橙色
-              onClick={handleSelect}
+              onClick={handleClick}
               sx={{ paddingX: '14px', marginLeft: '14px' }}
             >
               剧情模式
@@ -119,9 +119,3 @@ export function InfoCard({
     </Card>
   );
 }
-
-
-
-
-
-
