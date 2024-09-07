@@ -1,6 +1,6 @@
 /**
  * 这个文件包含了一个名为 SignUpForm 的 React 组件，用于展示注册表单。
- * 
+ *
  * @remarks
  * 这个组件依赖于以下第三方库：
  * - `react`
@@ -10,17 +10,17 @@
  * - `@mui/material`
  * - `react-hook-form`
  * - `zod`
- * 
+ *
  * @remarks
  * 重要变量：
  * - `defaultValues`：表单的默认值对象，包含了 `firstName`、`lastName`、`email`、`password` 和 `terms` 字段。
  * - `schema`：用于验证表单字段的 Zod 模式对象。
  * - `Values`：根据 `schema` 推断出的表单值类型。
- * 
+ *
  * @remarks
  * 重要函数：
  * - `onSubmit`：表单提交时的回调函数，用于处理表单数据的提交逻辑。
- * 
+ *
  * @public
  */
 
@@ -43,10 +43,23 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Controller, useForm } from 'react-hook-form';
 import { z as zod } from 'zod';
+import Slider from '@mui/material/Slider';
 
 import { paths } from '@/paths';
 import { authClient } from '@/lib/auth/client';
 import { useUser } from '@/hooks/use-user';
+
+const sliderMarks = [
+  { value: 0, label: '创新' },
+  { value: 50, label: '默认' },
+  { value: 100, label: '传统' }
+];
+
+const genderMarks = [
+  { value: 0, label: '女性' },
+  { value: 50, label: '默认' },
+  { value: 100, label: '男性' }
+];
 
 const schema = zod.object({
   firstName: zod.string().min(1, { message: 'First name is required' }),
@@ -56,12 +69,17 @@ const schema = zod.object({
     .min(6, { message: 'Password should be at least 6 characters' })
     .max(18, { message: 'Password should be no more than 18 characters' }),
   terms: zod.boolean().refine((value) => value, 'You must accept the terms and conditions'),
+  innovation: zod.number().min(0).max(100),
+  gender: zod.number().min(0).max(100)
 });
-
 
 type Values = zod.infer<typeof schema>;
 
-const defaultValues = { firstName: '', lastName: '', email: '', password: '', terms: false } satisfies Values;
+const defaultValues = {
+  firstName: '', lastName: '', email: '', password: '', terms: false,
+  innovation: 50,
+  gender: 50
+} satisfies Values;
 
 export function SignUpForm(): React.JSX.Element {
   const router = useRouter();
@@ -82,7 +100,7 @@ export function SignUpForm(): React.JSX.Element {
   const onSubmit = React.useCallback(
     async (values: Values): Promise<void> => {
       setIsPending(true);
-  
+
       try {
         const response = await fetch('/api/auth/register', {
           method: 'POST',
@@ -91,15 +109,25 @@ export function SignUpForm(): React.JSX.Element {
           },
           body: JSON.stringify(values),
         });
-  
+
+        // {
+        //   firstName: '用户填写的名',
+        //   lastName: '用户填写的姓',
+        //   email: '用户填写的邮箱',
+        //   password: '用户填写的密码',
+        //   terms: true, // 用户是否同意条款
+        //   innovation: 50, // 滑动条1的值（创新/默认/传统）
+        //   gender: 50, // 滑动条2的值（女性/默认/男性）
+        // }
+
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.message || 'Error registering user');
         }
-  
+
         try {
           const userData = await response.json();
-        
+
           if (setUser) {
             setUser(userData.user);  // 传入符合 UserType 的对象
           } else {
@@ -126,8 +154,8 @@ export function SignUpForm(): React.JSX.Element {
     },
     [router, setError, setUser]
   );
-  
-  
+
+
 
   return (
     <Stack spacing={3}>
@@ -184,6 +212,40 @@ export function SignUpForm(): React.JSX.Element {
                 <OutlinedInput {...field} label="Password" type="password" />
                 {errors.password ? <FormHelperText>{errors.password.message}</FormHelperText> : null}
               </FormControl>
+            )}
+          />
+          <Controller
+            control={control}
+            name="innovation"
+            render={({ field }) => (
+              <div>
+                <Typography>选择风格: 创新/默认/传统</Typography>
+                <Slider
+                  {...field}
+                  step={null} // 没有中间值
+                  marks={sliderMarks}
+                  min={0}
+                  max={100}
+                  valueLabelDisplay="auto"
+                />
+              </div>
+            )}
+          />
+          <Controller
+            control={control}
+            name="gender"
+            render={({ field }) => (
+              <div>
+                <Typography>选择性别: 女性/默认/男性</Typography>
+                <Slider
+                  {...field}
+                  step={null} // 没有中间值
+                  marks={genderMarks}
+                  min={0}
+                  max={100}
+                  valueLabelDisplay="auto"
+                />
+              </div>
             )}
           />
           <Controller
