@@ -21,6 +21,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+// 引入麦克风和键盘图标，以及 useState, useTheme, useMediaQuery
+import MicIcon from '@mui/icons-material/Mic';
+import KeyboardIcon from '@mui/icons-material/Keyboard';
+import { useState } from 'react';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
+
 
 // 角色数据和剧情开场白
 const characterData = {
@@ -47,6 +55,40 @@ const characterData = {
 
 
 export default function StoryPage(): React.JSX.Element {
+
+  // 左侧边栏的宽度，单位为像素
+  const sideNavWidth = 280;
+  // 添加状态变量，控制是文本输入还是语音输入
+  const [isVoiceInput, setIsVoiceInput] = useState(false);
+
+
+  // 开始录音的处理函数
+  const handleVoiceRecordStart = () => {
+    // 在此添加开始录音的逻辑
+  };
+
+// 占位函数，用于模拟获取语音转文本的结果
+   const getTranscribedText = async (): Promise<string> => {
+    // 模拟一个异步操作，返回一个默认的字符串
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve('这是语音转换的文本'); // 您可以替换为您想要的默认文本
+      }, 1000); // 模拟 1 秒的延迟
+    });
+  };
+  
+
+  // 结束录音的处理函数
+  const handleVoiceRecordStop = async () => {
+    // 在此添加结束录音并处理结果的逻辑
+    // 假设您已经有了将录音转换为文本的功能
+
+    const transcribedText = await getTranscribedText(); // 替换为您的实际实现
+
+    setMessage(transcribedText);
+    handleSend();
+  };
+
   const [message, setMessage] = React.useState('');
   const [messages, setMessages] = React.useState<{ text: string; sender: 'user' | 'character'; id: number; loading: boolean }[]>([]); 
   const [progress, setProgress] = React.useState(20); // 初始化进度为20
@@ -57,6 +99,13 @@ export default function StoryPage(): React.JSX.Element {
   const [dialogContent, setDialogContent] = React.useState('');
   // 在组件内创建一个 ref，用于引用聊天记录的底部
   const messagesEndRef = useRef<HTMLDivElement>(null); // 指定为 HTMLDivElement 类型
+
+  // 使用 useTheme 和 useMediaQuery 检测屏幕尺寸
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  // 判断窗口尺寸是否为 lg 或更大（即左侧边栏是否可见）
+  const isSideNavVisible = useMediaQuery(theme.breakpoints.up('lg'));
 
   //
   // 每当 messages 更新时，自动滚动到最底部
@@ -89,12 +138,12 @@ export default function StoryPage(): React.JSX.Element {
   // }, []);
 
 
-const handleClearChat = () => {
-  // 清空当前角色的聊天记录
-  setMessages([]);
-  // 删除 localStorage 中的记录
-  localStorage.removeItem(`story_history_${character}_${scene}`);
-};
+  const handleClearChat = () => {
+    // 清空当前角色的聊天记录
+    setMessages([]);
+    // 删除 localStorage 中的记录
+    localStorage.removeItem(`story_history_${character}_${scene}`);
+  };
 
   // 获取角色和剧情
   const pathParts = pathname?.split('/');
@@ -552,34 +601,71 @@ const handleClearChat = () => {
       {/* 聊天输入框和发送按钮位于底部 */}
       <Box
         display="flex"
-        justifyContent="space-between" // 将清空按钮和发送按钮放在两边
+        justifyContent="space-between"
         alignItems="center"
-        width="100%"
+        width={isSideNavVisible ? `calc(100% - ${sideNavWidth}px)` : '100%'}
         p={1}
-        m={0.5}
         sx={{
           position: 'fixed',
           bottom: 0,
+          left: isSideNavVisible ? `${sideNavWidth}px` : 0,
+          right: 0,
           bgcolor: 'white',
           boxShadow: '0 0px 5px rgba(0,0,0,0.1)',
           flexDirection: 'row',
           boxSizing: 'border-box',
-          transform: {xs:'translateX(-40px)',sm:'translateX(-40px)', md:'translateX(-40px)',lg:'translateX(-40px)',xl:'translateX(-440px)'}, // 左移 40px
+          zIndex: 1000,
         }}
       >
-      <Tooltip title="换个剧情">
-        <IconButton 
-          onClick={handleDialogClose}  //重置对话
-          sx={{ 
-            padding: '2px', 
-            minWidth: { xs: 30, sm: 48 }, 
+      {/* 左侧按钮，仅在大屏幕显示 */}
+      {!isSmallScreen && (
+        <Tooltip title="换个剧情">
+          <IconButton
+            onClick={handleDialogClose}  //重置对话
+            sx={{
+              padding: '2px',
+              minWidth: { xs: 30, sm: 48 },
+            }}
+          >
+            <CasinoIcon sx={{ fontSize: 24 }} />
+            <Typography variant="caption" sx={{ fontSize: 0 }}>重置聊天</Typography>
+          </IconButton>
+        </Tooltip>
+      )}
+
+      {/* 输入模式切换按钮 */}
+      <IconButton
+        onClick={() => setIsVoiceInput(!isVoiceInput)}  // 切换输入模式
+        sx={{
+          padding: '2px',
+          minWidth: { xs: 30, sm: 48 },
+        }}
+      >
+        {isVoiceInput ? <KeyboardIcon sx={{ fontSize: 24 }} /> : <MicIcon sx={{ fontSize: 24 }} />}
+      </IconButton>
+
+      {/* 根据输入模式显示不同的输入组件 */}
+      {isVoiceInput ? (
+        // 语音输入模式
+        <Button
+          fullWidth
+          variant="outlined"
+          onMouseDown={handleVoiceRecordStart}  // 按下开始录音
+          onMouseUp={handleVoiceRecordStop}    // 松开结束录音
+          sx={{
+            flexGrow: 1,
+            height: { xs: '36px', sm: '48px' },
+            mx: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
-          <CasinoIcon sx={{ fontSize: 24 }} />
-          <Typography variant="caption" sx={{ fontSize: 0 }}>重置聊天</Typography>
-        </IconButton>
-      </Tooltip>
-
+          <MicIcon sx={{ mr: 1 }} />
+          按住说话
+        </Button>
+      ) : (
+        // 文本输入模式
         <TextField
           fullWidth
           variant="outlined"
@@ -592,31 +678,43 @@ const handleClearChat = () => {
               e.preventDefault();
             }
           }}
-          sx={{ 
-            flexGrow: 1, 
-            height: { xs: '36px', sm: '48px' }, 
-            mx: 1, // 确保输入框两侧有适当的间距
-            '& .MuiOutlinedInput-root': { 
+          sx={{
+            flexGrow: 1,
+            height: { xs: '36px', sm: '48px' },
+            mx: 1,
+            '& .MuiOutlinedInput-root': {
               height: '100%',
               padding: '0 14px',
             },
           }}
         />
+      )}
 
-        <Button 
-          variant="contained" 
-          color="primary" 
-          onClick={handleSend} 
-          disabled={progress <= 0 || attemptsLeft <= 0 || progress >= 100} // 当进度条或剩余次数小于等于0时，或进度条大于100时禁用发送按钮
-          sx={{ 
+      {/* 仅在文本输入模式下显示发送按钮 */}
+      {!isVoiceInput && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSend}
+          disabled={progress <= 0 || attemptsLeft <= 0 || progress >= 100 || loading || message.trim() === ''}
+          sx={{
             padding: '4px 8px',
-            minWidth: { xs: 50, sm: 80 }, 
+            minWidth: { xs: 50, sm: 80 },
             fontSize: { xs: '0.75rem', sm: '1rem' },
           }}
         >
           发送
         </Button>
+      )}
       </Box>
     </Box>
   );
 }
+
+
+
+
+
+
+
+
