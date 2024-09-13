@@ -10,7 +10,11 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete'; // 引入删除图标
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'; // 引入返回图标
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+// 引入麦克风和键盘图标
+import MicIcon from '@mui/icons-material/Mic';
+import KeyboardIcon from '@mui/icons-material/Keyboard';
 
 // 角色数据
 const characterData = {
@@ -43,13 +47,40 @@ export default function Page(): React.JSX.Element {
 
   const messagesEndRef = useRef<HTMLDivElement>(null); // 指定为 HTMLDivElement 类型
 
+  // 添加状态变量，控制是文本输入还是语音输入
+  const [isVoiceInput, setIsVoiceInput] = useState(false);
+
+  // 开始录音的处理函数
+  const handleVoiceRecordStart = () => {
+    // 在此添加开始录音的逻辑
+  };
+
+  // 占位函数，用于模拟获取语音转文本的结果
+  const getTranscribedText = async (): Promise<string> => {
+    // 模拟一个异步操作，返回一个默认的字符串
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve('这是语音转换的文本'); // 您可以替换为您想要的默认文本
+      }, 1000); // 模拟 1 秒的延迟
+    });
+  };
+
+  // 结束录音的处理函数
+  const handleVoiceRecordStop = async () => {
+    // 在此添加结束录音并处理结果的逻辑
+    // 假设您已经有了将录音转换为文本的功能
+
+    const transcribedText = await getTranscribedText(); // 替换为您的实际实现
+
+    setMessage(transcribedText);
+    handleSend();
+  };
+
   // 每当 messages 更新时，自动滚动到最底部
   useEffect(() => {
     (messagesEndRef.current as HTMLDivElement)?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   
-
-
   React.useEffect(() => {
     // 从 localStorage 中恢复聊天记录
     const savedMessages = localStorage.getItem(`chat_history_${character}`);
@@ -65,7 +96,6 @@ export default function Page(): React.JSX.Element {
   const handleSend = async () => {
     if (message.trim() !== '') {
       // 将用户的消息添加到对话记录中
-      // 确保 sender 的类型为 "user" | "character"
       const userMessage = { text: message, sender: 'user' as const, id: Date.now(), loading: false };
       const newMessages = [...messages, userMessage];
       setMessages(newMessages);
@@ -75,24 +105,18 @@ export default function Page(): React.JSX.Element {
       setLoading(true);
 
       // 添加一个假的对方消息（显示头像和加载中动画）
-      // 定义 MessageType 类型
       interface MessageType {
         text: string;
-        sender: 'user' | 'character'; // 确保 sender 只能是 'user' 或 'character'
+        sender: 'user' | 'character';
         id: number;
-        loading: boolean; // 可选的 loading 属性
+        loading: boolean;
       }
 
-      // 定义扩展类型以支持 loading 字段
-      interface LoadingMessage extends Omit<MessageType, 'sender'> {
-        sender: 'character'; // 强制 sender 类型为 'character'
-      }
+      // 定义加载中的消息
+      const loadingMessage: MessageType = { text: '', sender: 'character', id: Date.now() + 1, loading: true };
 
-      // 示例代码
-      const loadingMessage: LoadingMessage = { text: '', sender: 'character', id: Date.now() + 1, loading: true };
-
-      // 更新消息状态时将其类型限定为 'user' | 'character'
-      setMessages((prevMessages) => [...prevMessages, loadingMessage as MessageType]);
+      // 更新消息状态
+      setMessages((prevMessages) => [...prevMessages, loadingMessage]);
 
       // 保存聊天记录到 localStorage
       localStorage.setItem(`chat_history_${character}`, JSON.stringify(newMessages));
@@ -113,11 +137,11 @@ export default function Page(): React.JSX.Element {
       setLoading(false); // 停止加载动画
 
       if (data.code === 1) {
-        const characterMessage = { text: data.replies, sender: 'character', id: Date.now() + 1,loading: false };
+        const characterMessage = { text: data.replies, sender: 'character', id: Date.now() + 1, loading: false };
         const updatedMessages = [...newMessages, characterMessage];
         setMessages((prevMessages) => {
           return prevMessages.map((msg) => 
-          (msg as MessageType).loading ? { ...msg, text: data.replies, loading: false } : msg
+            msg.loading ? { ...msg, text: data.replies, loading: false } : msg
           );          
         });
 
@@ -142,8 +166,6 @@ export default function Page(): React.JSX.Element {
       `}</style>
     </Box>
   );
-
-
 
   const handleClearChat = () => {
     // 清空当前角色的聊天记录
@@ -187,8 +209,6 @@ export default function Page(): React.JSX.Element {
           返回
         </Typography>  {/* 添加返回文字并调整字体大小 */}
       </IconButton>
-
-
 
       {/* 头像和名字居中显示 */}
       <Box
@@ -319,42 +339,80 @@ export default function Page(): React.JSX.Element {
           <Typography variant="caption" sx={{ fontSize: 0 }}>清空聊天</Typography>
         </IconButton>
 
-        <TextField
-          fullWidth
-          variant="outlined"
-          placeholder="开始聊天吧"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleSend();
-              e.preventDefault();
-            }
-          }}
+        {/* 输入模式切换按钮 */}
+        <IconButton 
+          onClick={() => setIsVoiceInput(!isVoiceInput)}  // 切换输入模式
           sx={{ 
-            flexGrow: 1, 
-            height: { xs: '36px', sm: '48px' }, 
-            mx: 1, // 确保输入框两侧有适当的间距
-            '& .MuiOutlinedInput-root': { 
-              height: '100%',
-              padding: '0 14px',
-            },
-          }}
-        />
-
-        <Button 
-          variant="contained" 
-          color="primary" 
-          onClick={handleSend} 
-          sx={{ 
-            padding: '4px 8px',
-            minWidth: { xs: 50, sm: 80 }, 
-            fontSize: { xs: '0.75rem', sm: '1rem' },
+            padding: '2px', 
+            minWidth: { xs: 30, sm: 48 }, 
           }}
         >
-          发送
-        </Button>
+          {isVoiceInput ? <KeyboardIcon sx={{ fontSize: 24 }} /> : <MicIcon sx={{ fontSize: 24 }} />}
+        </IconButton>
+
+        {/* 根据输入模式显示不同的输入组件 */}
+        {isVoiceInput ? (
+          // 语音输入模式
+          <Button
+            fullWidth
+            variant="outlined"
+            onMouseDown={handleVoiceRecordStart}  // 按下开始录音
+            onMouseUp={handleVoiceRecordStop}    // 松开结束录音
+            sx={{ 
+              flexGrow: 1, 
+              height: { xs: '36px', sm: '48px' }, 
+              mx: 1, 
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <MicIcon sx={{ mr: 1 }} />
+            按住说话
+          </Button>
+        ) : (
+          // 文本输入模式
+          <TextField
+            fullWidth
+            variant="outlined"
+            placeholder="开始聊天吧"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSend();
+                e.preventDefault();
+              }
+            }}
+            sx={{ 
+              flexGrow: 1, 
+              height: { xs: '36px', sm: '48px' }, 
+              mx: 1, // 确保输入框两侧有适当的间距
+              '& .MuiOutlinedInput-root': { 
+                height: '100%',
+                padding: '0 14px',
+              },
+            }}
+          />
+        )}
+
+        {/* 仅在文本输入模式下显示发送按钮 */}
+        {!isVoiceInput && (
+          <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={handleSend} 
+            sx={{ 
+              padding: '4px 8px',
+              minWidth: { xs: 50, sm: 80 }, 
+              fontSize: { xs: '0.75rem', sm: '1rem' },
+            }}
+          >
+            发送
+          </Button>
+        )}
       </Box>
     </Box>
   );
 }
+
