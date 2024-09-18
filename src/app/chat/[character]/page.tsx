@@ -42,6 +42,9 @@ export default function Page(): React.JSX.Element {
   const [loading, setLoading] = React.useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null); // 指定为 HTMLDivElement 类型
+  const [innovation, setInnovation] = React.useState(50); // Default value is 50
+  const [gender, setGender] = React.useState(50); // Default value is 50
+
 
   // 每当 messages 更新时，自动滚动到最底部
   useEffect(() => {
@@ -64,68 +67,53 @@ export default function Page(): React.JSX.Element {
 
   const handleSend = async () => {
     if (message.trim() !== '') {
-      // 将用户的消息添加到对话记录中
-      // 确保 sender 的类型为 "user" | "character"
       const userMessage = { text: message, sender: 'user' as const, id: Date.now(), loading: false };
       const newMessages = [...messages, userMessage];
       setMessages(newMessages);
       setMessage(''); // 清空输入框
-
-      // 显示加载中动画
+  
       setLoading(true);
-
-      // 添加一个假的对方消息（显示头像和加载中动画）
-      // 定义 MessageType 类型
-      interface MessageType {
-        text: string;
-        sender: 'user' | 'character'; // 确保 sender 只能是 'user' 或 'character'
-        id: number;
-        loading: boolean; // 可选的 loading 属性
-      }
-
-      // 定义扩展类型以支持 loading 字段
-      interface LoadingMessage extends Omit<MessageType, 'sender'> {
-        sender: 'character'; // 强制 sender 类型为 'character'
-      }
-
-      // 示例代码
-      const loadingMessage: LoadingMessage = { text: '', sender: 'character', id: Date.now() + 1, loading: true };
-
-      // 更新消息状态时将其类型限定为 'user' | 'character'
-      setMessages((prevMessages) => [...prevMessages, loadingMessage as MessageType]);
-
+  
+      const loadingMessage = { text: '', sender: 'character' as const, id: Date.now() + 1, loading: true };
+      setMessages((prevMessages) => [...prevMessages, loadingMessage]);
+  
       // 保存聊天记录到 localStorage
       localStorage.setItem(`chat_history_${character}`, JSON.stringify(newMessages));
-
-      // 发送请求到后端，将所有聊天记录传递给后端以支持多轮对话
-      const response = await fetch('https://llm-abggoprivx.cn-hangzhou.fcapp.run/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          role: character,
-          messages: newMessages.map(msg => ({ role: msg.sender, content: msg.text })),
-        }),
-      });
-
-      const data = await response.json();
-      setLoading(false); // 停止加载动画
-
-      if (data.code === 1) {
-        const characterMessage = { text: data.replies, sender: 'character', id: Date.now() + 1,loading: false };
-        const updatedMessages = [...newMessages, characterMessage];
-        setMessages((prevMessages) => {
-          return prevMessages.map((msg) => 
-          (msg as MessageType).loading ? { ...msg, text: data.replies, loading: false } : msg
-          );          
+  
+      try {
+        // Include `innovation` and `gender` as part of the POST request body
+        const response = await fetch('https://llm-abggoprivx.cn-hangzhou.fcapp.run/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            role: character, // The character being used in the chat
+            messages: newMessages.map(msg => ({ role: msg.sender, content: msg.text })), // User messages
+            // Include innovation and gender as additional data
+            innovation, 
+            gender, 
+          }),
         });
-
-        // 更新聊天记录到 localStorage
-        localStorage.setItem(`chat_history_${character}`, JSON.stringify(updatedMessages));
+  
+        const data = await response.json();
+        setLoading(false); // 停止加载动画
+  
+        if (data.code === 1) {
+          const characterMessage = { text: data.replies, sender: 'character' as const, id: Date.now() + 1, loading: false };
+          const updatedMessages = [...newMessages, characterMessage];
+          setMessages(updatedMessages);
+  
+          // 更新聊天记录到 localStorage
+          localStorage.setItem(`chat_history_${character}`, JSON.stringify(updatedMessages));
+        }
+      } catch (error) {
+        console.error('Error during message handling:', error);
+        setLoading(false); // 停止加载动画，即使请求失败
       }
     }
   };
+  
 
   // CSS加载动画
   const LoadingDots = () => (
@@ -142,6 +130,7 @@ export default function Page(): React.JSX.Element {
       `}</style>
     </Box>
   );
+  
 
 
 
@@ -320,40 +309,43 @@ export default function Page(): React.JSX.Element {
         </IconButton>
 
         <TextField
-          fullWidth
-          variant="outlined"
-          placeholder="开始聊天吧"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleSend();
-              e.preventDefault();
-            }
-          }}
-          sx={{ 
-            flexGrow: 1, 
-            height: { xs: '36px', sm: '48px' }, 
-            mx: 1, // 确保输入框两侧有适当的间距
-            '& .MuiOutlinedInput-root': { 
-              height: '100%',
-              padding: '0 14px',
-            },
-          }}
-        />
+  fullWidth
+  variant="outlined"
+  placeholder="开始聊天吧"
+  value={message}
+  onChange={(e) => setMessage(e.target.value)}
+  onKeyDown={(e) => {
+    if (e.key === 'Enter') {
+      handleSend();
+      e.preventDefault();
+    }
+  }}
+  sx={{ 
+    flexGrow: 1, 
+    height: { xs: '36px', sm: '48px' }, 
+    mx: 1, 
+    '& .MuiOutlinedInput-root': { 
+      height: '100%',
+      padding: '0 14px',
+      borderRadius: '20px', // 添加圆角
+    },
+  }}
+/>
 
-        <Button 
-          variant="contained" 
-          color="primary" 
-          onClick={handleSend} 
-          sx={{ 
-            padding: '4px 8px',
-            minWidth: { xs: 50, sm: 80 }, 
-            fontSize: { xs: '0.75rem', sm: '1rem' },
-          }}
-        >
-          发送
-        </Button>
+<Button 
+  variant="contained" 
+  color="primary" 
+  onClick={handleSend} 
+  sx={{ 
+    padding: '4px 8px',
+    borderRadius: '20px', // 添加圆角
+    minWidth: { xs: 50, sm: 80 }, 
+    fontSize: { xs: '0.75rem', sm: '1rem' },
+  }}
+>
+  发送
+</Button>
+
       </Box>
     </Box>
   );
