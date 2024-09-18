@@ -98,18 +98,13 @@ export default function Page(): React.JSX.Element {
 
   const handleSend = async () => {
     if (message.trim() !== '') {
-<<<<<<< HEAD
-=======
-      // 将用户的消息添加到对话记录中
->>>>>>> f30eb2240ff9d6f08a67f5d06dd8fb90841f670c
       const userMessage = { text: message, sender: 'user' as const, id: Date.now(), loading: false };
       const newMessages = [...messages, userMessage];
       setMessages(newMessages);
       setMessage(''); // 清空输入框
   
       setLoading(true);
-<<<<<<< HEAD
-  
+
       const loadingMessage = { text: '', sender: 'character' as const, id: Date.now() + 1, loading: true };
       setMessages((prevMessages) => [...prevMessages, loadingMessage]);
   
@@ -130,48 +125,7 @@ export default function Page(): React.JSX.Element {
             innovation, 
             gender, 
           }),
-=======
 
-      // 添加一个假的对方消息（显示头像和加载中动画）
-      interface MessageType {
-        text: string;
-        sender: 'user' | 'character';
-        id: number;
-        loading: boolean;
-      }
-
-      // 定义加载中的消息
-      const loadingMessage: MessageType = { text: '', sender: 'character', id: Date.now() + 1, loading: true };
-
-      // 更新消息状态
-      setMessages((prevMessages) => [...prevMessages, loadingMessage]);
-
-      // 保存聊天记录到 localStorage
-      localStorage.setItem(`chat_history_${character}`, JSON.stringify(newMessages));
-
-      // 发送请求到后端，将所有聊天记录传递给后端以支持多轮对话
-      const response = await fetch('https://llm-abggoprivx.cn-hangzhou.fcapp.run/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          role: character,
-          messages: newMessages.map(msg => ({ role: msg.sender, content: msg.text })),
-        }),
-      });
-
-      const data = await response.json();
-      setLoading(false); // 停止加载动画
-
-      if (data.code === 1) {
-        const characterMessage = { text: data.replies, sender: 'character', id: Date.now() + 1, loading: false };
-        const updatedMessages = [...newMessages, characterMessage];
-        setMessages((prevMessages) => {
-          return prevMessages.map((msg) => 
-            msg.loading ? { ...msg, text: data.replies, loading: false } : msg
-          );          
->>>>>>> f30eb2240ff9d6f08a67f5d06dd8fb90841f670c
         });
   
         const data = await response.json();
@@ -356,147 +310,110 @@ export default function Page(): React.JSX.Element {
 
       {/* 聊天输入框和发送按钮位于底部 */}
       <Box
-        display="flex"
-        justifyContent="space-between" // 将清空按钮和发送按钮放在两边
-        alignItems="center"
-        width="100%"
-        p={1}
-        m={0.5}
-        sx={{
-          position: 'sticky',
-          bottom: 0,
-          bgcolor: 'white',
-          boxShadow: '0 -2px 5px rgba(0,0,0,0.1)',
-          flexDirection: 'row',
-          boxSizing: 'border-box',
-        }}
-      >
-        <IconButton 
-          onClick={handleClearChat} 
-          sx={{ 
-            padding: '2px', 
-            minWidth: { xs: 30, sm: 48 }, 
-          }}
-        >
-          <DeleteIcon sx={{ fontSize: 24 }} />
-          <Typography variant="caption" sx={{ fontSize: 0 }}>清空聊天</Typography>
-        </IconButton>
-
-<<<<<<< HEAD
-        <TextField
-  fullWidth
-  variant="outlined"
-  placeholder="开始聊天吧"
-  value={message}
-  onChange={(e) => setMessage(e.target.value)}
-  onKeyDown={(e) => {
-    if (e.key === 'Enter') {
-      handleSend();
-      e.preventDefault();
-    }
-  }}
-  sx={{ 
-    flexGrow: 1, 
-    height: { xs: '36px', sm: '48px' }, 
-    mx: 1, 
-    '& .MuiOutlinedInput-root': { 
-      height: '100%',
-      padding: '0 14px',
-      borderRadius: '20px', // 添加圆角
-    },
-  }}
-/>
-
-<Button 
-  variant="contained" 
-  color="primary" 
-  onClick={handleSend} 
-  sx={{ 
-    padding: '4px 8px',
-    borderRadius: '20px', // 添加圆角
-    minWidth: { xs: 50, sm: 80 }, 
-    fontSize: { xs: '0.75rem', sm: '1rem' },
+  display="flex"
+  justifyContent="space-between"
+  alignItems="center"
+  width="100%"
+  p={1}
+  m={0.5}
+  sx={{
+    position: 'sticky',
+    bottom: 0,
+    bgcolor: 'white',
+    boxShadow: '0 -2px 5px rgba(0,0,0,0.1)',
+    boxSizing: 'border-box',
   }}
 >
-  发送
-</Button>
+  {/* Clear Chat Button */}
+  <IconButton 
+    onClick={handleClearChat} 
+    aria-label="清空聊天"
+    sx={{ 
+      padding: '2px', 
+      minWidth: { xs: 30, sm: 48 }, 
+    }}
+  >
+    <DeleteIcon sx={{ fontSize: 24 }} />
+  </IconButton>
 
-=======
-        {/* 输入模式切换按钮 */}
-        <IconButton 
-          onClick={() => setIsVoiceInput(!isVoiceInput)}  // 切换输入模式
-          sx={{ 
-            padding: '2px', 
-            minWidth: { xs: 30, sm: 48 }, 
-          }}
-        >
-          {isVoiceInput ? <KeyboardIcon sx={{ fontSize: 24 }} /> : <MicIcon sx={{ fontSize: 24 }} />}
-        </IconButton>
+  {/* Input Mode Toggle Button */}
+  <IconButton 
+    onClick={() => setIsVoiceInput(!isVoiceInput)}
+    aria-label={isVoiceInput ? "切换至文本输入" : "切换至语音输入"}
+    sx={{ 
+      padding: '2px', 
+      minWidth: { xs: 30, sm: 48 }, 
+    }}
+  >
+    {isVoiceInput ? <KeyboardIcon sx={{ fontSize: 24 }} /> : <MicIcon sx={{ fontSize: 24 }} />}
+  </IconButton>
 
-        {/* 根据输入模式显示不同的输入组件 */}
-        {isVoiceInput ? (
-          // 语音输入模式
-          <Button
-            fullWidth
-            variant="outlined"
-            onMouseDown={handleVoiceRecordStart}  // 按下开始录音
-            onMouseUp={handleVoiceRecordStop}    // 松开结束录音
-            sx={{ 
-              flexGrow: 1, 
-              height: { xs: '36px', sm: '48px' }, 
-              mx: 1, 
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <MicIcon sx={{ mr: 1 }} />
-            按住说话
-          </Button>
-        ) : (
-          // 文本输入模式
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="开始聊天吧"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleSend();
-                e.preventDefault();
-              }
-            }}
-            sx={{ 
-              flexGrow: 1, 
-              height: { xs: '36px', sm: '48px' }, 
-              mx: 1, // 确保输入框两侧有适当的间距
-              '& .MuiOutlinedInput-root': { 
-                height: '100%',
-                padding: '0 14px',
-              },
-            }}
-          />
-        )}
+  {/* Voice Input Mode */}
+  {isVoiceInput ? (
+    <Button
+      fullWidth
+      variant="outlined"
+      onMouseDown={handleVoiceRecordStart}
+      onMouseUp={handleVoiceRecordStop}
+      sx={{ 
+        flexGrow: 1, 
+        height: { xs: '36px', sm: '48px' }, 
+        mx: 1,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '20px',
+      }}
+    >
+      <MicIcon sx={{ mr: 1 }} />
+      按住说话
+    </Button>
+  ) : (
+    // Text Input Mode
+    <TextField
+      fullWidth
+      variant="outlined"
+      placeholder="开始聊天吧"
+      value={message}
+      onChange={(e) => setMessage(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          handleSend();
+          e.preventDefault();
+        }
+      }}
+      sx={{ 
+        flexGrow: 1, 
+        height: { xs: '36px', sm: '48px' }, 
+        mx: 1,
+        borderRadius: '20px',
+        '& .MuiOutlinedInput-root': { 
+          height: '100%',
+          padding: '0 14px',
+          borderRadius: '20px',
+        },
+      }}
+    />
+  )}
 
-        {/* 仅在文本输入模式下显示发送按钮 */}
-        {!isVoiceInput && (
-          <Button 
-            variant="contained" 
-            color="primary" 
-            onClick={handleSend} 
-            sx={{ 
-              padding: '4px 8px',
-              minWidth: { xs: 50, sm: 80 }, 
-              fontSize: { xs: '0.75rem', sm: '1rem' },
-            }}
-          >
-            发送
-          </Button>
-        )}
->>>>>>> f30eb2240ff9d6f08a67f5d06dd8fb90841f670c
-      </Box>
-    </Box>
+  {/* Send Button */}
+  {!isVoiceInput && (
+    <Button 
+      variant="contained" 
+      color="primary" 
+      onClick={handleSend} 
+      aria-label="发送消息"
+      sx={{ 
+        padding: '4px 8px',
+        minWidth: { xs: 50, sm: 80 }, 
+        fontSize: { xs: '0.75rem', sm: '1rem' },
+        borderRadius: '20px',
+      }}
+    >
+      发送
+    </Button>
+  )}
+</Box>
+</Box>
   );
 }
-
