@@ -52,6 +52,21 @@ export default function Page(): React.JSX.Element {
 
   // 添加状态变量，控制是文本输入还是语音输入
   const [isVoiceInput, setIsVoiceInput] = useState(false);
+  // 获取用户风格，性别选择
+  useEffect(() => {
+    const fetchUserPreferences = async () => {
+      try {
+        const response = await fetch('/api/user/preferences');
+        const data = await response.json();
+        setInnovation(data.innovation);
+        setGender(data.gender);
+      } catch (error) {
+        console.error('Error fetching user preferences:', error);
+      }
+    };
+
+    fetchUserPreferences();
+  }, []);
 
   // 开始录音的处理函数
   const handleVoiceRecordStart = () => {
