@@ -40,12 +40,14 @@ export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | nul
       setIsChecking(false);
       return;
     }
+  // 添加一个短暂的延迟，确保用户状态已更新
+  await new Promise(resolve => setTimeout(resolve, 100));
 
     if (!user) {
       /*测试需要，暂时不检查*/
-      // logger.debug('[AuthGuard]: User is not logged in, redirecting to sign in');
-      // router.replace(paths.auth.signIn);
-      // return;
+      logger.debug('[AuthGuard]: User is not logged in, redirecting to sign in');
+      router.replace(paths.auth.signIn);
+      return;
     }
 
     setIsChecking(false);

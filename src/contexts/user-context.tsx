@@ -36,6 +36,12 @@ export function UserProvider({ children }: UserProviderProps): React.JSX.Element
 
   const checkSession = React.useCallback(async (): Promise<void> => {
     try {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        setState((prev) => ({ ...prev, user: JSON.parse(storedUser), error: null, isLoading: false }));
+        return;
+      }
+
       const { data, error } = await authClient.getUser();
 
       if (error) {
@@ -44,6 +50,9 @@ export function UserProvider({ children }: UserProviderProps): React.JSX.Element
         return;
       }
 
+      if (data) {
+        localStorage.setItem('user', JSON.stringify(data));
+      }
       setState((prev) => ({ ...prev, user: data ?? null, error: null, isLoading: false }));
     } catch (err) {
       logger.error(err);
@@ -51,9 +60,13 @@ export function UserProvider({ children }: UserProviderProps): React.JSX.Element
     }
   }, []);
 
-  // 新增的 setUser 函数，用于手动设置用户信息
   const setUser = React.useCallback((user: User | null): void => {
     setState((prev) => ({ ...prev, user, isLoading: false, error: null }));
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
   }, []);
 
   React.useEffect(() => {
@@ -61,8 +74,7 @@ export function UserProvider({ children }: UserProviderProps): React.JSX.Element
       logger.error(err);
       // noop
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Expected
-  }, []);
+  }, [checkSession]);
 
   return (
     <UserContext.Provider value={{ ...state, checkSession, setUser }}>
