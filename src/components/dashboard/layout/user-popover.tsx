@@ -40,18 +40,21 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
   const handleSignOut = React.useCallback(async (): Promise<void> => {
     try {
       const { error } = await authClient.signOut();
-
+  
       if (error) {
         logger.error('Sign out error', error);
         return;
       }
-
+  
+      // 清除本地存储
+      localStorage.removeItem('user');
+  
       // 刷新认证状态
       await checkSession?.();
-
+  
       // 手动刷新路由
       router.refresh();
-
+  
       // 跳转到登录页面
       router.push(paths.auth.signIn); 
     } catch (err) {

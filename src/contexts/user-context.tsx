@@ -36,26 +36,24 @@ export function UserProvider({ children }: UserProviderProps): React.JSX.Element
 
   const checkSession = React.useCallback(async (): Promise<void> => {
     try {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        setState((prev) => ({ ...prev, user: JSON.parse(storedUser), error: null, isLoading: false }));
-        return;
-      }
-
       const { data, error } = await authClient.getUser();
-
+  
       if (error) {
         logger.error(error);
+        localStorage.removeItem('user'); // 清除本地存储
         setState((prev) => ({ ...prev, user: null, error: 'Something went wrong', isLoading: false }));
         return;
       }
-
+  
       if (data) {
-        localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem('user', JSON.stringify(data)); // 更新本地存储
+      } else {
+        localStorage.removeItem('user'); // 如果没有用户数据，清除本地存储
       }
       setState((prev) => ({ ...prev, user: data ?? null, error: null, isLoading: false }));
     } catch (err) {
       logger.error(err);
+      localStorage.removeItem('user'); // 清除本地存储
       setState((prev) => ({ ...prev, user: null, error: 'Something went wrong', isLoading: false }));
     }
   }, []);

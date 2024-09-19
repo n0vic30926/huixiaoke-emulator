@@ -28,8 +28,20 @@ export interface AuthGuardProps {
 
 export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | null {
   const router = useRouter();
-  const { user, error, isLoading } = useUser();
+  const { user, error, isLoading, checkSession, setUser } = useUser();
   const [isChecking, setIsChecking] = React.useState<boolean>(true);
+
+  React.useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (!user && storedUser) {
+      // 如果 context 中没有用户但本地存储有，尝试恢复用户状态
+      checkSession?.();
+    } else if (user && !storedUser) {
+      // 如果 context 中有用户但本地存储没有，清除用户状态
+      setUser?.(null);
+    }
+    setIsChecking(false);
+  }, [user, checkSession, setUser]);
 
   const checkPermissions = async (): Promise<void> => {
     if (isLoading) {
@@ -40,11 +52,8 @@ export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | nul
       setIsChecking(false);
       return;
     }
-  // 添加一个短暂的延迟，确保用户状态已更新
-  await new Promise(resolve => setTimeout(resolve, 100));
 
     if (!user) {
-      /*测试需要，暂时不检查*/
       logger.debug('[AuthGuard]: User is not logged in, redirecting to sign in');
       router.replace(paths.auth.signIn);
       return;
@@ -57,7 +66,6 @@ export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | nul
     checkPermissions().catch(() => {
       // noop
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Expected
   }, [user, error, isLoading]);
 
   if (isChecking) {
