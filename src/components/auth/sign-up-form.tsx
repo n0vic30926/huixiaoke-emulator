@@ -88,6 +88,8 @@ export function SignUpForm(): React.JSX.Element {
 
   const [isPending, setIsPending] = React.useState<boolean>(false);
 
+  const [successMessage, setSuccessMessage] = React.useState<string | null>(null);
+
   const {
     control,
     handleSubmit,
@@ -100,7 +102,7 @@ export function SignUpForm(): React.JSX.Element {
   const onSubmit = React.useCallback(
     async (values: Values): Promise<void> => {
       setIsPending(true);
-
+    
       try {
         const response = await fetch('/api/auth/register', {
           method: 'POST',
@@ -109,6 +111,8 @@ export function SignUpForm(): React.JSX.Element {
           },
           body: JSON.stringify(values),
         });
+
+
 
         // {
         //   firstName: '用户填写的名',
@@ -125,18 +129,11 @@ export function SignUpForm(): React.JSX.Element {
           throw new Error(errorData.message || 'Error registering user');
         }
 
-        try {
-          const userData = await response.json();
+        // 注册成功，显示成功消息
+        // setSuccess('注册成功！请登录您的账户。');
 
-          if (setUser) {
-            setUser(userData.user);  // 传入符合 UserType 的对象
-          } else {
-            //
-          }
-        } catch {
-          // 你可以在这里进行额外的错误处理，例如显示错误消息或采取其他操作
-        }
-
+        // 跳转到登录页面
+        // router.push(paths.auth.signIn);
 
         // Redirect to the homepage
         router.push(paths.home);
@@ -265,6 +262,7 @@ export function SignUpForm(): React.JSX.Element {
               </div>
             )}
           />
+          {successMessage && <Alert color="success">{successMessage}</Alert>}
           {errors.root ? <Alert color="error">{errors.root.message}</Alert> : null}
           <Button disabled={isPending} type="submit" variant="contained">
             注册
