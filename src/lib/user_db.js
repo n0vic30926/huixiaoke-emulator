@@ -3,6 +3,7 @@
 
 // 创建一个 Sequelize 实例并配置数据库连接
 import { Sequelize } from 'sequelize';
+import mysql2 from 'mysql2';
 
 const sequelize = new Sequelize('zhengxinhuike', 'zhengxinhuike', '613adfb11b49641d', {
   host: 'mysql.sqlpub.com',
