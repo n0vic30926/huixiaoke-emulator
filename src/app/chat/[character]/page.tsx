@@ -68,31 +68,59 @@ export default function Page(): React.JSX.Element {
     fetchUserPreferences();
   }, []);
 
-  // 开始录音的处理函数
-  const handleVoiceRecordStart = () => {
-    // 在此添加开始录音的逻辑
-  };
 
-  // 占位函数，用于模拟获取语音转文本的结果
-  const getTranscribedText = async (): Promise<string> => {
-    // 模拟一个异步操作，返回一个默认的字符串
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve('这是语音转换的文本'); // 您可以替换为您想要的默认文本
-      }, 1000); // 模拟 1 秒的延迟
-    });
-  };
 
-  // 结束录音的处理函数
-  const handleVoiceRecordStop = async () => {
-    // 在此添加结束录音并处理结果的逻辑
-    // 假设您已经有了将录音转换为文本的功能
+// 添加 Web Speech API 兼容性支持
+const getSpeechRecognition = () => {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SpeechRecognition) {
+    return new SpeechRecognition();
+  }
+  return null;
+};
+let recognition: SpeechRecognition | null = null; // 使用 Web Speech API 的 SpeechRecognition
 
-    const transcribedText = await getTranscribedText(); // 替换为您的实际实现
+const handleVoiceRecordStart = () => {
+  if (!recognition) {
+    recognition = getSpeechRecognition();
+  }
 
-    setMessage(transcribedText);
-    handleSend();
-  };
+  if (recognition) {
+    recognition.lang = 'zh-CN'; // 设置为中文（可以根据需求更改语言）
+    recognition.interimResults = false; // 是否返回中间结果
+    recognition.maxAlternatives = 1; // 返回的最多结果数量
+
+    recognition.onstart = () => {
+      console.log('Voice recognition started.');
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      console.log('Transcript:', transcript);
+      setMessage(transcript); // 将识别到的文本设置为 message
+      handleSend(); // 自动发送消息
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error', event.error);
+    };
+
+    recognition.onend = () => {
+      console.log('Voice recognition ended.');
+    };
+
+    // 开始语音识别
+    recognition.start();
+  } else {
+    console.error('Web Speech API is not supported in this browser.');
+  }
+};
+
+const handleVoiceRecordStop = () => {
+  if (recognition) {
+    recognition.stop(); // 停止语音识别
+  }
+};
 
   // 每当 messages 更新时，自动滚动到最底部
   useEffect(() => {
